@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Income - Finance Admin</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="center">
+    <div class="theme-toggle">
+        <button onclick="toggleTheme()">🌙</button>
+    </div>
+    <h1>Add Income</h1>
+    <input type="number" id="incomeAmount" placeholder="Amount (Rs.)">
+    <input type="text" id="incomeNote" placeholder="Note">
+    <button onclick="addIncome()">Save Income</button>
+
+    <script src="app.js" defer></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', applyTheme);
+    </script>
+</body>
+</html>
+
+

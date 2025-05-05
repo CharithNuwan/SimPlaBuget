@@ -1,0 +1,14 @@
+body { font-family: Arial, sans-serif; margin: 0; background: #f4f6f8; color: #000; transition: background 0.5s, color 0.5s; }
+body.dark { background: #1e1e2f; color: #eee; }
+.center { text-align: center; padding: 40px; }
+.container { padding: 20px; }
+.cards { display: flex; flex-wrap: wrap; gap: 20px; }
+.card { background: white; padding: 20px; flex: 1 1 40%; min-width: 200px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: background 0.5s; }
+body.dark .card { background: #2a2a40; }
+input { margin: 10px; padding: 10px; width: 250px; }
+button { margin: 10px; padding: 10px 20px; font-weight: bold; background: #007BFF; border: none; color: white; cursor: pointer; }
+button:hover { background: #0056b3; }
+nav { background: #007BFF; padding: 10px; text-align: center; display: flex; justify-content: center; align-items: center; gap: 20px; }
+nav a { color: white; margin: 10px; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+.theme-toggle { position: fixed; top: 10px; right: 10px; }

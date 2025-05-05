@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings - Finance Admin</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="applyTheme()" class="center">
+    <div class="theme-toggle">
+        <button onclick="toggleTheme()">🌙</button>
+    </div>
+    <h1>Settings</h1>
+    <button onclick="backupData()">Backup Data</button>
+    <input type="file" id="restoreFile" onchange="restoreData(event)">
+    <button onclick="logout()">Logout</button>
+    <script src="app.js" defer></script>
+</body>
+</html>
