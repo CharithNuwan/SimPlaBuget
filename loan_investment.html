@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loan-Based Investment Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      color: var(--text-color);
+    }
+    h1, h2 {
+      text-align: center;
+      color: var(--accent);
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px 5px;
+      width: 180px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: var(--accent);
+      color: white;
+    }
+    .summary {
+      margin: 1rem 0;
+      font-size: 1.2rem;
+    }
+    .actions {
+      text-align: center;
+    }
+    .delete-btn {
+      color: red;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body onload="applyTheme(); renderLoanInvestment()">
+  <nav>
+    <div class="logo">💰 Finance Admin</div>
+    <ul class="nav-links">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="loan_investment.html" class="active">Loan Investment</a></li>
+    </ul>
+    <div class="theme-toggle">
+      <button id="themeToggleBtn" onclick="toggleTheme()">
+        <span id="themeIcon">🌙</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1>💼 Loan-Based Investment Tracker</h1>
+
+    <div class="summary">
+      <p><strong>Total Invested:</strong> Rs. <span id="totalInvested">0.00</span></p>
+      <p><strong>Total Return:</strong> Rs. <span id="totalReturn">0.00</span></p>
+      <p><strong>Net Profit:</strong> Rs. <span id="netProfit">0.00</span></p>
+    </div>
+
+    <div class="actions">
+      <input type="number" id="invAmount" placeholder="Investment Amount">
+      <input type="number" id="monthlyProfit" placeholder="Monthly Profit">
+      <input type="number" id="duration" placeholder="Duration (months)">
+      <br>
+      <button onclick="addLoanInvestment()">➕ Add</button>
+      <button onclick="exportLoanInvestment()">⬇ Export</button>
+      <input type="file" onchange="importLoanInvestment(event)">
+      <button onclick="resetLoanInvestment()">♻️ Reset</button>
+    </div>
+
+    <h2>📋 Records</h2>
+    <table>
+      <thead>
+        <tr><th>Investment</th><th>Profit</th><th>Duration</th><th>Total Return</th><th>Action</th></tr>
+      </thead>
+      <tbody id="loanTable"></tbody>
+    </table>
+  </main>
+
+  <script>
+    const LOAN_KEY = "loanInvestments";
+
+    function renderLoanInvestment() {
+      const data = JSON.parse(localStorage.getItem(LOAN_KEY)) || [];
+      const tbody = document.getElementById("loanTable");
+      tbody.innerHTML = "";
+
+      let invested = 0;
+      let returns = 0;
+      data.forEach((item, index) => {
+        const total = item.monthlyProfit * item.duration;
+        invested += item.amount;
+        returns += total;
+
+        tbody.innerHTML += `
+          <tr>
+            <td>Rs. ${item.amount.toLocaleString()}</td>
+            <td>Rs. ${item.monthlyProfit.toLocaleString()}</td>
+            <td>${item.duration} months</td>
+            <td>Rs. ${(total + item.amount).toLocaleString()}</td>
+            <td><span class="delete-btn" onclick="deleteLoanInvestment(${index})">🗑️</span></td>
+          </tr>
+        `;
+      });
+
+      document.getElementById("totalInvested").innerText = invested.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById("totalReturn").innerText = returns.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById("netProfit").innerText = (returns).toLocaleString(undefined, { minimumFractionDigits: 2 });
+    }
+
+    function addLoanInvestment() {
+      const amount = parseFloat(document.getElementById("invAmount").value);
+      const monthlyProfit = parseFloat(document.getElementById("monthlyProfit").value);
+      const duration = parseInt(document.getElementById("duration").value);
+
+      if (!amount || !monthlyProfit || !duration) return alert("Invalid input");
+
+      const data = JSON.parse(localStorage.getItem(LOAN_KEY)) || [];
+      data.push({ amount, monthlyProfit, duration });
+      localStorage.setItem(LOAN_KEY, JSON.stringify(data));
+      renderLoanInvestment();
+    }
+
+    function deleteLoanInvestment(index) {
+      const data = JSON.parse(localStorage.getItem(LOAN_KEY)) || [];
+      data.splice(index, 1);
+      localStorage.setItem(LOAN_KEY, JSON.stringify(data));
+      renderLoanInvestment();
+    }
+
+    function exportLoanInvestment() {
+      const data = localStorage.getItem(LOAN_KEY) || "[]";
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([data], { type: "application/json" }));
+      a.download = "loan_investment.json";
+      a.click();
+    }
+
+    function importLoanInvestment(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (Array.isArray(parsed)) {
+            localStorage.setItem(LOAN_KEY, JSON.stringify(parsed));
+            renderLoanInvestment();
+            alert("✅ Imported successfully!");
+          } else {
+            throw new Error("Invalid format");
+          }
+        } catch (err) {
+          alert("❌ Invalid file format.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetLoanInvestment() {
+      if (confirm("Are you sure you want to reset all loan investment data?")) {
+        localStorage.removeItem(LOAN_KEY);
+        renderLoanInvestment();
+      }
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      document.getElementById('themeIcon').innerText = isDark ? '🌞' : '🌙';
+    }
+
+    function applyTheme() {
+      const theme = localStorage.getItem("theme");
+      if (theme === "dark") document.body.classList.add('dark');
+    }
+  </script>
+</body>
+</html>
