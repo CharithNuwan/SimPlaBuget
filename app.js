@@ -100,18 +100,30 @@ function drawChart(incomes, expenses) {
 }
 
 function toggleTheme() {
-    let body = document.body;
-    body.classList.toggle('dark');
-    localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+    const body = document.body;
+    const isDark = body.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+    const themeIcon = document.getElementById('themeIcon');
+    themeIcon.textContent = isDark ? '🌞' : '🌙';
 }
 
 function applyTheme() {
-    if (localStorage.getItem('theme') === 'dark') {
+    const savedTheme = localStorage.getItem('theme');
+    const isDark = savedTheme === 'dark';
+
+    if (isDark) {
         document.body.classList.add('dark');
     } else {
         document.body.classList.remove('dark');
     }
+
+    const themeIcon = document.getElementById('themeIcon');
+    if (themeIcon) {
+        themeIcon.textContent = isDark ? '🌞' : '🌙';
+    }
 }
+
 
 if (location.pathname.includes('dashboard.html')) {
     window.onload = loadDashboard;
@@ -154,5 +166,15 @@ function buildCalendarEvents() {
 }
 
   
+window.addEventListener('DOMContentLoaded', () => {
+    applyTheme();
+
+    if (location.pathname.includes('dashboard.html')) {
+        loadDashboard();
+    } else if (location.pathname.includes('calendar.html')) {
+        loadCalendar();
+    }
+});
+
   
   

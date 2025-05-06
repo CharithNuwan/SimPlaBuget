@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body onload="applyTheme()">
+<body>
     <nav>
         <div class="logo">💰 Finance Admin</div>
         <ul class="nav-links">
@@ -18,9 +18,13 @@
             <li><a href="calendar.html">Calendar</a></li>
             <li><a href="settings.html">Settings</a></li>
         </ul>
+        
         <div class="theme-toggle">
-            <button onclick="toggleTheme()">🌗</button>
-        </div>
+            <button id="themeToggleBtn" onclick="toggleTheme()">
+              <span id="themeIcon">🌙</span>
+            </button>
+          </div>
+          
     </nav>
 
     <main class="container">
