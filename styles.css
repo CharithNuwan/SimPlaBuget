@@ -12,3 +12,116 @@ nav { background: #007BFF; padding: 10px; text-align: center; display: flex; jus
 nav a { color: white; margin: 10px; text-decoration: none; }
 nav a:hover { text-decoration: underline; }
 .theme-toggle { position: fixed; top: 10px; right: 10px; }
+
+:root {
+    --bg-color: #f5f7fa;
+    --text-color: #1a1a1a;
+    --card-bg: #ffffff;
+    --nav-bg: #ffffff;
+    --accent: #4f46e5;
+}
+
+body.dark {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --card-bg: #1f1f1f;
+    --nav-bg: #1a1a1a;
+    --accent: #6366f1;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    transition: background 0.3s, color 0.3s;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--nav-bg);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    color: var(--accent);
+}
+
+.theme-toggle button {
+    font-size: 1.2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+}
+
+.card p {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 0;
+    color: var(--accent);
+}
+
+.chart-card {
+    padding: 2rem;
+}

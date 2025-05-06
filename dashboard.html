@@ -2,35 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - Finance Admin</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Finance Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body onload="applyTheme()">
     <nav>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="add_income.html">Add Income</a>
-        <a href="add_expense.html">Add Expense</a>
-        <a href="calendar.html">Calendar</a>
-        <a href="settings.html">Settings</a>
+        <div class="logo">💰 Finance Admin</div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="add_income.html">Add Income</a></li>
+            <li><a href="add_expense.html">Add Expense</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
         <div class="theme-toggle">
-            <button onclick="toggleTheme()">🌙</button>
+            <button onclick="toggleTheme()">🌗</button>
         </div>
-      </nav>      
-    <div class="container">
-        <h1>Dashboard</h1>
-        <div class="cards">
-            <div class="card"><h2>Cash in Bank</h2><p id="cashBank">0</p></div>
-            <div class="card"><h2>Burn Rate</h2><p id="burnRate">0</p></div>
-            <div class="card"><h2>Expenses</h2><p id="expenses">0</p></div>
-            <div class="card"><h2>Solvency</h2><p id="solvency">0</p></div>
-        </div>
-        <div class="card">
-            <h2>Monthly Trends</h2>
-            <canvas id="trendChart" height="100"></canvas>
-        </div>
-    </div>
-    <script src="app.js" defer></script>
+    </nav>
 
+    <main class="container">
+        <h1>Dashboard</h1>
+        <section class="cards">
+            <div class="card"><h2>💳 Cash in Bank</h2><p id="cashBank">$0</p></div>
+            <div class="card"><h2>🔥 Burn Rate</h2><p id="burnRate">$0</p></div>
+            <div class="card"><h2>💸 Expenses</h2><p id="expenses">$0</p></div>
+            <div class="card"><h2>📈 Solvency</h2><p id="solvency">$0</p></div>
+        </section>
+        <section class="chart-card card">
+            <h2>📊 Monthly Trends</h2>
+            <canvas id="trendChart" height="100"></canvas>
+        </section>
+    </main>
+
+    <script src="app.js" defer></script>
 </body>
 </html>
