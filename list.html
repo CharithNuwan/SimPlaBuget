@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Income & Expense List - Finance Admin</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 1000px;
+      background: var(--card-bg);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+
+    th {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    tr:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    .delete-btn {
+      color: red;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body onload="applyTheme(); loadList()" class="center">
+
+  <!-- ✅ Full Nav Bar (List is Active) -->
+  <nav>
+    <div class="logo">💰 Finance Admin</div>
+    <ul class="nav-links">
+        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="add_income.html">Add Income</a></li>
+        <li><a href="add_expense.html">Add Expense</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="list.html">List</a></li>
+        <li><a href="mm_account.html">MM Wealth</a></li>
+        <li><a href="loan_details.html">Loan Details</a></li>
+        <li><a href="settings.html">Settings</a></li>
+        <li><div class="theme-toggle">
+            <button id="themeToggleBtn" onclick="toggleTheme()">
+              <span id="themeIcon">🌙</span>
+            </button>
+          </div></li>
+    </ul>
+</nav>
+
+  <h1>💼 Income & Expense List</h1>
+
+  <h2>💰 Incomes</h2>
+  <table id="incomeTable">
+    <thead>
+      <tr><th>Amount</th><th>Note</th><th>Date</th><th>Action</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>💸 Expenses</h2>
+  <table id="expenseTable">
+    <thead>
+      <tr><th>Amount</th><th>Category</th><th>Date</th><th>Action</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script src="app.js" defer></script>
+  <script>
+    function loadList() {
+      const incomeTable = document.querySelector('#incomeTable tbody');
+      const expenseTable = document.querySelector('#expenseTable tbody');
+
+      const incomes = JSON.parse(localStorage.getItem('incomes')) || [];
+      const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+
+      incomeTable.innerHTML = incomes.map((item, index) => `
+        <tr>
+          <td>Rs. ${item.amount}</td>
+          <td>${item.note}</td>
+          <td>${new Date(item.date).toLocaleDateString()}</td>
+          <td><span class="delete-btn" onclick="deleteIncome(${index})">🗑️</span></td>
+        </tr>
+      `).join('');
+
+      expenseTable.innerHTML = expenses.map((item, index) => `
+        <tr>
+          <td>Rs. ${item.amount}</td>
+          <td>${item.category}</td>
+          <td>${new Date(item.date).toLocaleDateString()}</td>
+          <td><span class="delete-btn" onclick="deleteExpense(${index})">🗑️</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function deleteIncome(index) {
+      const incomes = JSON.parse(localStorage.getItem('incomes')) || [];
+      incomes.splice(index, 1);
+      localStorage.setItem('incomes', JSON.stringify(incomes));
+      loadList();
+    }
+
+    function deleteExpense(index) {
+      const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+      expenses.splice(index, 1);
+      localStorage.setItem('expenses', JSON.stringify(expenses));
+      loadList();
+    }
+  </script>
+</body>
+</html>

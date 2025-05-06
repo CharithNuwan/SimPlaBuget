@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MM Account Summary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .mm-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    .card-box {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+    .flex-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .value-box {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: var(--accent);
+      color: white;
+    }
+  </style>
+</head>
+<body onload="applyTheme(); renderMMAccount()">
+    <nav>
+        <div class="logo">💰 Finance Admin</div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="add_income.html">Add Income</a></li>
+            <li><a href="add_expense.html">Add Expense</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="list.html">List</a></li>
+            <li><a href="mm_account.html">MM Wealth</a></li>
+            <li><a href="loan_details.html">Loan Details</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><div class="theme-toggle">
+                <button id="themeToggleBtn" onclick="toggleTheme()">
+                  <span id="themeIcon">🌙</span>
+                </button>
+              </div></li>
+        </ul>
+    </nav>
+
+  <main class="mm-container">
+    <div class="card-box">
+      <h2>💼 CHARITHA NUWAN WIJETUNGA</h2>
+      <p>Your Wealth</p>
+      <div class="value-box">LKR <span id="totalWealth">0.00</span></div>
+    </div>
+
+    <div class="card-box flex-row">
+      <div style="flex: 1">
+        <canvas id="donutChart"></canvas>
+      </div>
+      <div style="flex: 1">
+        <h3>Fund Details</h3>
+        <table>
+          <thead>
+            <tr><th>Fund</th><th>Units</th><th>Price</th><th>Market Value</th><th>Yield</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>NDB WEALTH MONEY FUND</td>
+              <td id="units">0.00</td>
+              <td id="price">0.00</td>
+              <td id="marketValue">0.00</td>
+              <td id="yield">0.00%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card-box">
+      <h3>📅 Weekly Compound Interest Projection</h3>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Main Value (LKR)</th><th>Profit (LKR)</th></tr>
+        </thead>
+        <tbody id="interestTable"></tbody>
+      </table>
+    </div>
+
+    <div class="card-box">
+      <h3>🗓️ Monthly (Weekly-by-Week) Compound Projection</h3>
+      <table>
+        <thead>
+          <tr><th>Week</th><th>Main Value (LKR)</th><th>Profit (LKR)</th></tr>
+        </thead>
+        <tbody id="monthlyInterestTable"></tbody>
+      </table>
+    </div>
+
+    <!-- <div class="card-box">
+      <h3>📦 Backup / Restore MM Data</h3>
+      <button onclick="exportMMData()">⬇ Export Data</button>
+      <input type="file" id="mmFileInput" onchange="importMMData(event)">
+    </div> -->
+  </main>
+
+  <script src="app.js" defer></script>
+  <script>
+    let mmData = {
+      fundName: 'NDB WEALTH MONEY FUND',
+      units: 15036.89,
+      price: 36.1070,
+      yield: 7.9
+    };
+
+    const stored = localStorage.getItem('mmData');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (
+          typeof parsed.fundName === 'string' &&
+          !isNaN(parsed.units) &&
+          !isNaN(parsed.price) &&
+          !isNaN(parsed.yield)
+        ) {
+          mmData = parsed;
+        }
+      } catch (e) {
+        console.warn("Failed to load from localStorage:", e);
+      }
+    }
+
+    function renderMMAccount() {
+      const marketValue = mmData.units * mmData.price;
+      const dailyRate = (mmData.yield / 100) / 365;
+
+      document.getElementById('totalWealth').textContent = marketValue.toLocaleString('en-LK', { minimumFractionDigits: 2 });
+      document.getElementById('units').textContent = mmData.units.toLocaleString('en-LK', { minimumFractionDigits: 2 });
+      document.getElementById('price').textContent = mmData.price.toFixed(4);
+      document.getElementById('marketValue').textContent = marketValue.toLocaleString('en-LK', { minimumFractionDigits: 2 });
+      document.getElementById('yield').textContent = mmData.yield.toFixed(2) + '%';
+
+      new Chart(document.getElementById('donutChart'), {
+        type: 'doughnut',
+        data: {
+          labels: [mmData.fundName],
+          datasets: [{
+            data: [marketValue],
+            backgroundColor: ['#3b82f6'],
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'right' }
+          }
+        }
+      });
+
+      let table = document.getElementById('interestTable');
+      table.innerHTML = '';
+      let current = marketValue;
+      for (let i = 0; i <= 6; i++) {
+        const profit = current * dailyRate;
+        const next = current + profit;
+        const row = `<tr><td>${new Date(Date.now() + i * 86400000).toLocaleDateString()}</td><td>${next.toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td><td>${profit.toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td></tr>`;
+        table.innerHTML += row;
+        current = next;
+      }
+
+      let monthTable = document.getElementById('monthlyInterestTable');
+      monthTable.innerHTML = '';
+      current = marketValue;
+      for (let w = 1; w <= 4; w++) {
+        const weekProfit = current * dailyRate * 7;
+        const weekEndValue = current + weekProfit;
+        const row = `<tr><td>Week ${w}</td><td>${weekEndValue.toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td><td>${weekProfit.toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td></tr>`;
+        monthTable.innerHTML += row;
+        current = weekEndValue;
+      }
+    }
+
+    function exportMMData() {
+      const blob = new Blob([JSON.stringify(mmData, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'mm_account_backup.json';
+      a.click();
+    }
+
+    function importMMData(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          console.log("Imported JSON:", parsed);
+          if (
+            parsed &&
+            typeof parsed.fundName === 'string' &&
+            !isNaN(parsed.units) &&
+            !isNaN(parsed.price) &&
+            !isNaN(parsed.yield)
+          ) {
+            mmData = parsed;
+            localStorage.setItem('mmData', JSON.stringify(mmData));
+            renderMMAccount();
+          } else {
+            throw new Error('Invalid structure');
+          }
+        } catch (err) {
+          alert('Invalid JSON file.');
+          console.error(err);
+        }
+      };
+      reader.readAsText(file);
+    }
+  </script>
+</body>
+</html>

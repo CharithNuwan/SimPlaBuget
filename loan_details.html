@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loan Details - Finance Admin</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
+  <style>
+    .loan-container {
+      max-width: 900px;
+      margin: 3rem auto;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+      color: var(--accent);
+      text-align: center;
+    }
+
+    .loan-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .loan-details div {
+      font-size: 1rem;
+    }
+
+    .loan-actions {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    .progress-bar {
+      height: 20px;
+      background-color: #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .progress-bar-inner {
+      height: 100%;
+      background-color: var(--accent);
+      text-align: right;
+      color: white;
+      font-size: 12px;
+      line-height: 20px;
+      padding-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">💰 Finance Admin</div>
+    <ul class="nav-links">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="add_income.html">Add Income</a></li>
+      <li><a href="add_expense.html">Add Expense</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+      <li><a href="list.html">List</a></li>
+      <li><a href="mm_account.html">MM Wealth</a></li>
+      <li><a href="loan_details.html" class="active">Loan Details</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li>
+        <div class="theme-toggle">
+          <button id="themeToggleBtn" onclick="toggleTheme()">
+            <span id="themeIcon">🌙</span>
+          </button>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="loan-container">
+    <h1>📄 Loan Details</h1>
+    <div class="loan-details">
+      <div><strong>Outstanding Balance:</strong> LKR <span id="outstanding">2,000,000.00</span></div>
+      <div><strong>Interest Rate:</strong> 13.5%</div>
+      <div><strong>Next Payment:</strong> LKR 46,020.00 on 03/06/2025</div>
+      <div><strong>Disbursement Amount:</strong> LKR 2,000,000.00</div>
+      <div><strong>Expiry Date:</strong> 03/05/2030</div>
+      <div><strong>Branch:</strong> 287 - EMBULDENIYA</div>
+      <div><strong>Account:</strong> 8025813735</div>
+      <div><strong>Owner:</strong> MR CHARITHA NUWAN WIJETUNGA</div>
+    </div>
+
+    <div class="progress-bar">
+      <div id="progressInner" class="progress-bar-inner" style="width: 0%">0%</div>
+    </div>
+
+    <div class="loan-actions">
+      <button onclick="markLoanPaid()">✅ Mark This Month as Paid</button>
+      <button onclick="exportLoanData()">⬇ Export Loan Data</button>
+      <input type="file" id="importLoanFile" onchange="importLoanData(event)">
+      <button onclick="resetLoanData()">❌ Reset Loan Data</button>
+    </div>
+
+    <h2>📅 Payment History</h2>
+    <table>
+      <thead>
+        <tr><th>Paid Date</th><th>Amount</th></tr>
+      </thead>
+      <tbody id="loanHistory"></tbody>
+    </table>
+  </main>
+
+  <script>
+    const LOAN_INITIAL = 2000000;
+    const PAYMENT_AMOUNT = 46020;
+
+    function markLoanPaid() {
+      const payments = JSON.parse(localStorage.getItem('loanPayments')) || [];
+      const now = new Date();
+      const entry = {
+        date: now.toISOString().split('T')[0],
+        amount: PAYMENT_AMOUNT
+      };
+      payments.push(entry);
+      localStorage.setItem('loanPayments', JSON.stringify(payments));
+      renderLoanPayments();
+    }
+
+    function renderLoanPayments() {
+      const payments = JSON.parse(localStorage.getItem('loanPayments')) || [];
+      const tbody = document.getElementById('loanHistory');
+
+      if (payments.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="2">No payments yet.</td></tr>';
+      } else {
+        tbody.innerHTML = payments.map(p =>
+          `<tr><td>${p.date}</td><td>Rs. ${(Number(p.amount) || 0).toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td></tr>`
+        ).join('');
+      }
+
+      const totalPaid = payments.reduce((sum, p) => sum + Number(p.amount), 0);
+      const remaining = LOAN_INITIAL - totalPaid;
+      document.getElementById('outstanding').innerText = remaining.toLocaleString('en-LK', { minimumFractionDigits: 2 });
+
+      const progress = Math.min((totalPaid / LOAN_INITIAL) * 100, 100);
+      const progressEl = document.getElementById('progressInner');
+      progressEl.style.width = progress.toFixed(1) + '%';
+      progressEl.innerText = progress.toFixed(1) + '%';
+    }
+
+    function exportLoanData() {
+      const data = JSON.parse(localStorage.getItem('loanPayments')) || [];
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'loan_payments.json';
+      a.click();
+    }
+
+    function importLoanData(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (Array.isArray(parsed)) {
+            localStorage.setItem('loanPayments', JSON.stringify(parsed));
+            renderLoanPayments();
+          } else {
+            throw new Error('Invalid structure');
+          }
+        } catch (err) {
+          alert('Invalid JSON file.');
+          console.error(err);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetLoanData() {
+      if (confirm("Are you sure you want to reset all loan data?")) {
+        localStorage.removeItem('loanPayments');
+        renderLoanPayments();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderLoanPayments(); // app.js already calls applyTheme()
+    });
+  </script>
+</body>
+</html>

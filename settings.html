@@ -1,18 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Settings - Finance Admin</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .settings-container {
+            max-width: 600px;
+            margin: 3rem auto;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-container h1,
+        .settings-container h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .settings-group {
+            margin-bottom: 2rem;
+        }
+
+        .settings-group input[type="file"] {
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        .settings-group button {
+            margin-top: 0.5rem;
+        }
+    </style>
 </head>
-<body onload="applyTheme()" class="center">
+
+<body onload="applyTheme()">
+    
+    <nav>
+        <div class="logo">💰 Finance Admin</div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="add_income.html">Add Income</a></li>
+            <li><a href="add_expense.html">Add Expense</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="list.html">List</a></li>
+            <li><a href="mm_account.html">MM Wealth</a></li>
+            <li><a href="loan_details.html">Loan Details</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><div class="theme-toggle">
+                <button id="themeToggleBtn" onclick="toggleTheme()">
+                  <span id="themeIcon">🌙</span>
+                </button>
+              </div></li>
+        </ul>
+    </nav>
+
     <div class="theme-toggle">
         <button onclick="toggleTheme()">🌙</button>
     </div>
-    <h1>Settings</h1>
-    <button onclick="backupData()">Backup Data</button>
-    <input type="file" id="restoreFile" onchange="restoreData(event)">
-    <button onclick="logout()">Logout</button>
+
+    <div class="settings-container">
+        <h1>⚙️ Settings</h1>
+
+        <div class="settings-group">
+            <h2>📁 Backup Income/Expenses</h2>
+            <button onclick="backupData()">⬇ Export Income & Expenses</button>
+            <input type="file" id="restoreFile" onchange="restoreData(event)">
+        </div>
+
+        <div class="settings-group">
+            <h2>📊 MM Account Data</h2>
+            <button onclick="backupMM()">⬇ Export MM Data</button>
+            <input type="file" id="mmRestoreFile" onchange="restoreMM(event)">
+        </div>
+
+        <div class="settings-group">
+            <h2>🔐 Session</h2>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+
     <script src="app.js" defer></script>
 </body>
+
 </html>

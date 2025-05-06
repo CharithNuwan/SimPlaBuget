@@ -25,9 +25,11 @@ function loadDashboard() {
     let totalIncome = incomes.reduce((sum, i) => sum + i.amount, 0);
     let totalExpense = expenses.reduce((sum, e) => sum + e.amount, 0);
     let net = totalIncome - totalExpense;
-    document.getElementById('cashBank').innerText = 'Rs. ' + net;
-    document.getElementById('burnRate').innerText = 'Rs. ' + (totalExpense / (new Date().getMonth() + 1)).toFixed(2);
-    document.getElementById('expenses').innerText = 'Rs. ' + totalExpense;
+    let burnRate = totalExpense / (new Date().getMonth() + 1);
+
+    document.getElementById('cashBank').innerText = 'Rs. ' + net.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById('burnRate').innerText = 'Rs. ' + burnRate.toLocaleString(undefined, { minimumFractionDigits: 2 });
+    document.getElementById('expenses').innerText = 'Rs. ' + totalExpense.toLocaleString(undefined, { minimumFractionDigits: 2 }); 
     document.getElementById('solvency').innerText = (net / (totalExpense/ (new Date().getMonth() + 1))).toFixed(1) + ' months';
     drawChart(incomes, expenses);
 }
@@ -177,4 +179,45 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   
-  
+fetch('navbar.html')
+.then(res => res.text())
+.then(html => {
+  document.getElementById('navbar-placeholder').innerHTML = html;
+}); 
+
+
+function backupMM() {
+    const mmData = JSON.parse(localStorage.getItem('mmData'));
+    if (!mmData) {
+        alert('No MM data found!');
+        return;
+    }
+    const blob = new Blob([JSON.stringify(mmData, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'mm_account_backup.json';
+    a.click();
+}
+
+function restoreMM(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const parsed = JSON.parse(e.target.result);
+            if (
+                parsed && typeof parsed.fundName === 'string' &&
+                !isNaN(parsed.units) && !isNaN(parsed.price) && !isNaN(parsed.yield)
+            ) {
+                localStorage.setItem('mmData', JSON.stringify(parsed));
+                alert('MM Data Restored Successfully!');
+            } else {
+                throw new Error('Structure mismatch');
+            }
+        } catch (err) {
+            alert('Invalid MM JSON file.');
+            console.error(err);
+        }
+    };
+    reader.readAsText(file);
+}
