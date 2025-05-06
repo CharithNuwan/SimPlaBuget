@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Emergency Fund</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            color: var(--accent);
+        }
+
+        input,
+        button {
+            padding: 10px;
+            margin: 10px 5px;
+            width: 180px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .summary {
+            margin: 1rem 0;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .actions {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body onload="applyTheme(); renderEmergencyFund()">
+    <nav>
+        <div class="logo">💰 Finance Admin</div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="add_income.html">Add Income</a></li>
+            <li><a href="add_expense.html">Add Expense</a></li>
+            <li><a href="list.html">List</a></li>
+            <li><a href="mm_account.html">MM Wealth</a></li>
+            <li><a href="loan_details.html">Loan Details</a></li>
+            <li><a href="emergency_fund.html">Emergency Fund</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li>
+                <div class="theme-toggle">
+                    <button id="themeToggleBtn" onclick="toggleTheme()">
+                        <span id="themeIcon">🌙</span>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <h1>🛡️ Emergency Fund</h1>
+
+        <div class="summary">
+            <p><strong>Total Fund:</strong> LKR <span id="fundTotal">0.00</span></p>
+            <p><strong>Burn Rate:</strong> LKR <span id="burnRate">0.00</span> / month</p>
+            <p><strong>Survival Months:</strong> <span id="survivalMonths">0</span> months</p>
+        </div>
+
+        <div class="actions">
+            <input type="number" id="amountInput" placeholder="Amount (LKR)">
+            <input type="text" id="noteInput" placeholder="Note (optional)">
+            <br>
+            <button onclick="addMoney()">➕ Add</button>
+            <button onclick="removeMoney()">➖ Remove</button>
+            <button onclick="exportEmergency()">⬇ Export</button>
+            <input type="file" onchange="importEmergency(event)">
+            <br>
+            <button onclick="resetEmergencyFund()">❌ Reset</button> <!-- ✅ NEW BUTTON -->
+        </div>
+
+        <h2>💼 History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody id="fundHistory"></tbody>
+        </table>
+    </main>
+
+    <script>
+        const EMERGENCY_KEY = "emergencyFund";
+        const EXPENSE_KEY = "expenses";
+
+        function getBurnRate() {
+            const expenses = JSON.parse(localStorage.getItem(EXPENSE_KEY)) || [];
+            const months = new Set();
+            const monthlyExpenses = {};
+
+            expenses.forEach(e => {
+                const d = new Date(e.date);
+                const key = d.getFullYear() + '-' + (d.getMonth() + 1);
+                if (!monthlyExpenses[key]) monthlyExpenses[key] = 0;
+                monthlyExpenses[key] += e.amount;
+                months.add(key);
+            });
+
+            const total = Object.values(monthlyExpenses).reduce((a, b) => a + b, 0);
+            return months.size ? total / months.size : 0;
+        }
+
+        function renderEmergencyFund() {
+            const data = JSON.parse(localStorage.getItem(EMERGENCY_KEY)) || [];
+            const tbody = document.getElementById('fundHistory');
+            tbody.innerHTML = '';
+
+            let total = 0;
+            data.forEach(e => {
+                total += e.type === 'add' ? e.amount : -e.amount;
+                const row = `<tr>
+          <td>${e.date}</td>
+          <td>${e.type === 'add' ? 'Add' : 'Remove'}</td>
+          <td>Rs. ${e.amount.toLocaleString()}</td>
+          <td>${e.note || ''}</td>
+        </tr>`;
+                tbody.innerHTML += row;
+            });
+
+            const burn = getBurnRate();
+            document.getElementById('fundTotal').innerText = total.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            document.getElementById('burnRate').innerText = burn.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            document.getElementById('survivalMonths').innerText = burn ? (total / burn).toFixed(1) : '∞';
+        }
+
+        function addMoney() {
+            const amount = parseFloat(document.getElementById('amountInput').value);
+            const note = document.getElementById('noteInput').value;
+            if (!amount || amount <= 0) return alert("Invalid amount");
+
+            const data = JSON.parse(localStorage.getItem(EMERGENCY_KEY)) || [];
+            data.push({ date: new Date().toISOString().split("T")[0], type: 'add', amount, note });
+            localStorage.setItem(EMERGENCY_KEY, JSON.stringify(data));
+            renderEmergencyFund();
+        }
+
+        function removeMoney() {
+            const amount = parseFloat(document.getElementById('amountInput').value);
+            const note = document.getElementById('noteInput').value;
+            if (!amount || amount <= 0) return alert("Invalid amount");
+
+            const data = JSON.parse(localStorage.getItem(EMERGENCY_KEY)) || [];
+            data.push({ date: new Date().toISOString().split("T")[0], type: 'remove', amount, note });
+            localStorage.setItem(EMERGENCY_KEY, JSON.stringify(data));
+            renderEmergencyFund();
+        }
+
+        function exportEmergency() {
+            const data = localStorage.getItem(EMERGENCY_KEY) || "[]";
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([data], { type: "application/json" }));
+            a.download = "emergency_fund.json";
+            a.click();
+        }
+
+        function importEmergency(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (Array.isArray(parsed) && parsed.every(p =>
+                        typeof p.date === 'string' &&
+                        (p.type === 'add' || p.type === 'remove') &&
+                        typeof p.amount === 'number'
+                    )) {
+                        localStorage.setItem(EMERGENCY_KEY, JSON.stringify(parsed));
+                        renderEmergencyFund();
+                        alert("✅ Emergency Fund data imported successfully!");
+                    } else {
+                        throw new Error("Invalid structure");
+                    }
+                } catch (err) {
+                    alert("❌ Invalid JSON file or format.");
+                    console.error("Import Error:", err);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+            document.getElementById('themeIcon').innerText = isDark ? '🌞' : '🌙';
+        }
+        function resetEmergencyFund() {
+            if (confirm("Are you sure you want to reset the emergency fund? This cannot be undone.")) {
+                localStorage.removeItem(EMERGENCY_KEY);
+                renderEmergencyFund();
+                alert("✅ Emergency fund reset successfully.");
+            }
+        }
+
+
+        function applyTheme() {
+            const theme = localStorage.getItem("theme");
+            if (theme === "dark") document.body.classList.add('dark');
+        }
+    </script>
+</body>
+
+</html>

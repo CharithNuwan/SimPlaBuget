@@ -3,23 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <title>Income & Expense List - Finance Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="styles.css">
   <style>
-    table {
-      margin: 20px auto;
-      border-collapse: collapse;
-      width: 90%;
-      max-width: 1000px;
+    main.container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 2rem;
       background: var(--card-bg);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      border-radius: 8px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: var(--accent);
+      margin-top: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      border-radius: 10px;
       overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.03);
+      background: var(--card-bg);
     }
 
     th, td {
-      padding: 12px 16px;
+      padding: 14px 18px;
+      border-bottom: 1px solid #ddd;
       text-align: left;
-      border-bottom: 1px solid #ccc;
     }
 
     th {
@@ -28,7 +43,7 @@
     }
 
     tr:hover {
-      background-color: rgba(0, 0, 0, 0.04);
+      background-color: rgba(0, 0, 0, 0.03);
     }
 
     .delete-btn {
@@ -38,48 +53,64 @@
     }
   </style>
 </head>
-<body onload="applyTheme(); loadList()" class="center">
-
-  <!-- ✅ Full Nav Bar (List is Active) -->
+<body onload="applyTheme(); loadList()">
   <nav>
     <div class="logo">💰 Finance Admin</div>
     <ul class="nav-links">
-        <li><a href="dashboard.html" class="active">Dashboard</a></li>
-        <li><a href="add_income.html">Add Income</a></li>
-        <li><a href="add_expense.html">Add Expense</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="list.html">List</a></li>
-        <li><a href="mm_account.html">MM Wealth</a></li>
-        <li><a href="loan_details.html">Loan Details</a></li>
-        <li><a href="settings.html">Settings</a></li>
-        <li><div class="theme-toggle">
-            <button id="themeToggleBtn" onclick="toggleTheme()">
-              <span id="themeIcon">🌙</span>
-            </button>
-          </div></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="add_income.html">Add Income</a></li>
+      <li><a href="add_expense.html">Add Expense</a></li>
+      <li><a href="list.html" class="active">List</a></li>
+      <li><a href="mm_account.html">MM Wealth</a></li>
+      <li><a href="loan_details.html">Loan Details</a></li>
+      <li><a href="emergency_fund.html">Emergency Fund</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li>
+        <div class="theme-toggle">
+          <button id="themeToggleBtn" onclick="toggleTheme()">
+            <span id="themeIcon">🌙</span>
+          </button>
+        </div>
+      </li>
     </ul>
-</nav>
+  </nav>
 
-  <h1>💼 Income & Expense List</h1>
+  <main class="container">
+    <h1>📋 Income & Expense Records</h1>
 
-  <h2>💰 Incomes</h2>
-  <table id="incomeTable">
-    <thead>
-      <tr><th>Amount</th><th>Note</th><th>Date</th><th>Action</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <h2>💰 Incomes</h2>
+    <table id="incomeTable">
+      <thead>
+        <tr><th>Amount</th><th>Note</th><th>Date</th><th>Action</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-  <h2>💸 Expenses</h2>
-  <table id="expenseTable">
-    <thead>
-      <tr><th>Amount</th><th>Category</th><th>Date</th><th>Action</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <h2>💸 Expenses</h2>
+    <table id="expenseTable">
+      <thead>
+        <tr><th>Amount</th><th>Category</th><th>Date</th><th>Action</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
 
-  <script src="app.js" defer></script>
   <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      document.getElementById('themeIcon').innerText = isDark ? '🌞' : '🌙';
+    }
+
+    function applyTheme() {
+      const theme = localStorage.getItem("theme");
+      if (theme === "dark") {
+        document.body.classList.add('dark');
+        document.getElementById('themeIcon').innerText = '🌞';
+      }
+    }
+
     function loadList() {
       const incomeTable = document.querySelector('#incomeTable tbody');
       const expenseTable = document.querySelector('#expenseTable tbody');
@@ -89,8 +120,8 @@
 
       incomeTable.innerHTML = incomes.map((item, index) => `
         <tr>
-          <td>Rs. ${item.amount}</td>
-          <td>${item.note}</td>
+          <td>Rs. ${item.amount.toLocaleString()}</td>
+          <td>${item.note || '-'}</td>
           <td>${new Date(item.date).toLocaleDateString()}</td>
           <td><span class="delete-btn" onclick="deleteIncome(${index})">🗑️</span></td>
         </tr>
@@ -98,8 +129,8 @@
 
       expenseTable.innerHTML = expenses.map((item, index) => `
         <tr>
-          <td>Rs. ${item.amount}</td>
-          <td>${item.category}</td>
+          <td>Rs. ${item.amount.toLocaleString()}</td>
+          <td>${item.category || '-'}</td>
           <td>${new Date(item.date).toLocaleDateString()}</td>
           <td><span class="delete-btn" onclick="deleteExpense(${index})">🗑️</span></td>
         </tr>

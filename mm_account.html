@@ -45,6 +45,24 @@
       background-color: var(--accent);
       color: white;
     }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .form-row input {
+      flex: 1;
+      padding: 10px;
+    }
+    .form-row button {
+      padding: 10px 20px;
+      font-weight: bold;
+      background: #4f46e5;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body onload="applyTheme(); renderMMAccount()">
@@ -54,188 +72,178 @@
             <li><a href="dashboard.html" class="active">Dashboard</a></li>
             <li><a href="add_income.html">Add Income</a></li>
             <li><a href="add_expense.html">Add Expense</a></li>
-            <li><a href="calendar.html">Calendar</a></li>
             <li><a href="list.html">List</a></li>
             <li><a href="mm_account.html">MM Wealth</a></li>
             <li><a href="loan_details.html">Loan Details</a></li>
+            <li><a href="emergency_fund.html">Emergency Fund</a></li>
             <li><a href="settings.html">Settings</a></li>
-            <li><div class="theme-toggle">
-                <button id="themeToggleBtn" onclick="toggleTheme()">
-                  <span id="themeIcon">🌙</span>
-                </button>
-              </div></li>
+            <li>
+                <div class="theme-toggle">
+                    <button id="themeToggleBtn" onclick="toggleTheme()">
+                        <span id="themeIcon">🌙</span>
+                    </button>
+                </div>
+            </li>
         </ul>
     </nav>
 
-  <main class="mm-container">
-    <div class="card-box">
-      <h2>💼 CHARITHA NUWAN WIJETUNGA</h2>
-      <p>Your Wealth</p>
-      <div class="value-box">LKR <span id="totalWealth">0.00</span></div>
-    </div>
+<main class="mm-container">
+  <div class="card-box">
+    <h2>💼 CHARITHA NUWAN WIJETUNGA</h2>
+    <p>Your Wealth</p>
+    <div class="value-box">LKR <span id="totalWealth">0.00</span></div>
+  </div>
 
-    <div class="card-box flex-row">
-      <div style="flex: 1">
-        <canvas id="donutChart"></canvas>
-      </div>
-      <div style="flex: 1">
-        <h3>Fund Details</h3>
-        <table>
-          <thead>
-            <tr><th>Fund</th><th>Units</th><th>Price</th><th>Market Value</th><th>Yield</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>NDB WEALTH MONEY FUND</td>
-              <td id="units">0.00</td>
-              <td id="price">0.00</td>
-              <td id="marketValue">0.00</td>
-              <td id="yield">0.00%</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="card-box flex-row">
+    <div style="flex: 1">
+      <canvas id="donutChart"></canvas>
     </div>
-
-    <div class="card-box">
-      <h3>📅 Weekly Compound Interest Projection</h3>
+    <div style="flex: 1">
+      <h3>Fund Details</h3>
       <table>
         <thead>
-          <tr><th>Date</th><th>Main Value (LKR)</th><th>Profit (LKR)</th></tr>
+        <tr><th>Fund</th><th>Units</th><th>Price</th><th>Market Value</th><th>Yield</th></tr>
         </thead>
-        <tbody id="interestTable"></tbody>
+        <tbody>
+        <tr>
+          <td>NDB WEALTH MONEY FUND</td>
+          <td id="units">0.00</td>
+          <td id="price">0.00</td>
+          <td id="marketValue">0.00</td>
+          <td id="yield">0.00%</td>
+        </tr>
+        </tbody>
       </table>
     </div>
+  </div>
 
-    <div class="card-box">
-      <h3>🗓️ Monthly (Weekly-by-Week) Compound Projection</h3>
-      <table>
-        <thead>
-          <tr><th>Week</th><th>Main Value (LKR)</th><th>Profit (LKR)</th></tr>
-        </thead>
-        <tbody id="monthlyInterestTable"></tbody>
-      </table>
+  <!-- ✅ Update Widget -->
+  <div class="card-box">
+    <h3>✏️ Update Fund Values</h3>
+    <div class="form-row">
+      <input type="number" step="0.01" id="updateUnits" placeholder="Units">
+      <input type="number" step="0.0001" id="updatePrice" placeholder="Price">
+      <input type="number" step="0.01" id="updateYield" placeholder="Yield (%)">
+      <button onclick="updateMMValues()">Update</button>
     </div>
+  </div>
 
-    <!-- <div class="card-box">
-      <h3>📦 Backup / Restore MM Data</h3>
-      <button onclick="exportMMData()">⬇ Export Data</button>
-      <input type="file" id="mmFileInput" onchange="importMMData(event)">
-    </div> -->
-  </main>
+  <div class="card-box">
+    <h3>📅 Weekly Compound Interest Projection</h3>
+    <table>
+      <thead><tr><th>Date</th><th>Main Value (LKR)</th><th>Profit (LKR)</th></tr></thead>
+      <tbody id="interestTable"></tbody>
+    </table>
+  </div>
 
-  <script src="app.js" defer></script>
-  <script>
-    let mmData = {
-      fundName: 'NDB WEALTH MONEY FUND',
-      units: 15036.89,
-      price: 36.1070,
-      yield: 7.9
-    };
+  <div class="card-box">
+    <h3>🗓️ Monthly (Weekly-by-Week) Compound Projection</h3>
+    <table>
+      <thead><tr><th>Week</th><th>Main Value (LKR)</th><th>Profit (LKR)</th></tr></thead>
+      <tbody id="monthlyInterestTable"></tbody>
+    </table>
+  </div>
+</main>
 
-    const stored = localStorage.getItem('mmData');
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        if (
-          typeof parsed.fundName === 'string' &&
-          !isNaN(parsed.units) &&
-          !isNaN(parsed.price) &&
-          !isNaN(parsed.yield)
-        ) {
-          mmData = parsed;
-        }
-      } catch (e) {
-        console.warn("Failed to load from localStorage:", e);
+<script>
+  let mmData = {
+    fundName: 'NDB WEALTH MONEY FUND',
+    units: 15036.89,
+    price: 36.1070,
+    yield: 7.9
+  };
+
+  const stored = localStorage.getItem('mmData');
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      if (typeof parsed.fundName === 'string' && !isNaN(parsed.units) && !isNaN(parsed.price) && !isNaN(parsed.yield)) {
+        mmData = parsed;
       }
+    } catch (e) {
+      console.warn("Failed to load from localStorage:", e);
     }
+  }
 
-    function renderMMAccount() {
-      const marketValue = mmData.units * mmData.price;
-      const dailyRate = (mmData.yield / 100) / 365;
+  function renderMMAccount() {
+    const marketValue = mmData.units * mmData.price;
+    const dailyRate = (mmData.yield / 100) / 365;
 
-      document.getElementById('totalWealth').textContent = marketValue.toLocaleString('en-LK', { minimumFractionDigits: 2 });
-      document.getElementById('units').textContent = mmData.units.toLocaleString('en-LK', { minimumFractionDigits: 2 });
-      document.getElementById('price').textContent = mmData.price.toFixed(4);
-      document.getElementById('marketValue').textContent = marketValue.toLocaleString('en-LK', { minimumFractionDigits: 2 });
-      document.getElementById('yield').textContent = mmData.yield.toFixed(2) + '%';
+    document.getElementById('totalWealth').textContent = marketValue.toLocaleString('en-LK', { minimumFractionDigits: 2 });
+    document.getElementById('units').textContent = mmData.units.toLocaleString('en-LK', { minimumFractionDigits: 2 });
+    document.getElementById('price').textContent = mmData.price.toFixed(4);
+    document.getElementById('marketValue').textContent = marketValue.toLocaleString('en-LK', { minimumFractionDigits: 2 });
+    document.getElementById('yield').textContent = mmData.yield.toFixed(2) + '%';
 
-      new Chart(document.getElementById('donutChart'), {
-        type: 'doughnut',
-        data: {
-          labels: [mmData.fundName],
-          datasets: [{
-            data: [marketValue],
-            backgroundColor: ['#3b82f6'],
-            hoverOffset: 4
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { position: 'right' }
-          }
-        }
-      });
-
-      let table = document.getElementById('interestTable');
-      table.innerHTML = '';
-      let current = marketValue;
-      for (let i = 0; i <= 6; i++) {
-        const profit = current * dailyRate;
-        const next = current + profit;
-        const row = `<tr><td>${new Date(Date.now() + i * 86400000).toLocaleDateString()}</td><td>${next.toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td><td>${profit.toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td></tr>`;
-        table.innerHTML += row;
-        current = next;
+    new Chart(document.getElementById('donutChart'), {
+      type: 'doughnut',
+      data: {
+        labels: [mmData.fundName],
+        datasets: [{
+          data: [marketValue],
+          backgroundColor: ['#3b82f6'],
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'right' } }
       }
+    });
 
-      let monthTable = document.getElementById('monthlyInterestTable');
-      monthTable.innerHTML = '';
-      current = marketValue;
-      for (let w = 1; w <= 4; w++) {
-        const weekProfit = current * dailyRate * 7;
-        const weekEndValue = current + weekProfit;
-        const row = `<tr><td>Week ${w}</td><td>${weekEndValue.toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td><td>${weekProfit.toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td></tr>`;
-        monthTable.innerHTML += row;
-        current = weekEndValue;
-      }
+    let table = document.getElementById('interestTable');
+    table.innerHTML = '';
+    let current = marketValue;
+    const dailyRateCalc = dailyRate;
+    for (let i = 0; i <= 6; i++) {
+      const profit = current * dailyRateCalc;
+      const next = current + profit;
+      table.innerHTML += `<tr><td>${new Date(Date.now() + i * 86400000).toLocaleDateString()}</td><td>${next.toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td><td>${profit.toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td></tr>`;
+      current = next;
     }
 
-    function exportMMData() {
-      const blob = new Blob([JSON.stringify(mmData, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'mm_account_backup.json';
-      a.click();
+    let monthTable = document.getElementById('monthlyInterestTable');
+    monthTable.innerHTML = '';
+    current = marketValue;
+    for (let w = 1; w <= 4; w++) {
+      const weekProfit = current * dailyRateCalc * 7;
+      const weekEndValue = current + weekProfit;
+      monthTable.innerHTML += `<tr><td>Week ${w}</td><td>${weekEndValue.toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td><td>${weekProfit.toLocaleString('en-LK', { minimumFractionDigits: 2 })}</td></tr>`;
+      current = weekEndValue;
     }
+  }
 
-    function importMMData(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const parsed = JSON.parse(e.target.result);
-          console.log("Imported JSON:", parsed);
-          if (
-            parsed &&
-            typeof parsed.fundName === 'string' &&
-            !isNaN(parsed.units) &&
-            !isNaN(parsed.price) &&
-            !isNaN(parsed.yield)
-          ) {
-            mmData = parsed;
-            localStorage.setItem('mmData', JSON.stringify(mmData));
-            renderMMAccount();
-          } else {
-            throw new Error('Invalid structure');
-          }
-        } catch (err) {
-          alert('Invalid JSON file.');
-          console.error(err);
-        }
-      };
-      reader.readAsText(file);
+  function updateMMValues() {
+    const units = parseFloat(document.getElementById('updateUnits').value);
+    const price = parseFloat(document.getElementById('updatePrice').value);
+    const yieldVal = parseFloat(document.getElementById('updateYield').value);
+    if (isNaN(units) || isNaN(price) || isNaN(yieldVal)) {
+      alert("Please enter valid values.");
+      return;
     }
-  </script>
+    mmData.units = units;
+    mmData.price = price;
+    mmData.yield = yieldVal;
+    localStorage.setItem('mmData', JSON.stringify(mmData));
+    renderMMAccount();
+    alert("Values updated successfully!");
+  }
+
+  function toggleTheme() {
+    const body = document.body;
+    const isDark = body.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    const themeIcon = document.getElementById('themeIcon');
+    themeIcon.textContent = isDark ? '🌞' : '🌙';
+  }
+
+  function applyTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const isDark = savedTheme === 'dark';
+    document.body.classList.toggle('dark', isDark);
+    const themeIcon = document.getElementById('themeIcon');
+    if (themeIcon) themeIcon.textContent = isDark ? '🌞' : '🌙';
+  }
+</script>
 </body>
 </html>

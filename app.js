@@ -129,6 +129,9 @@ function applyTheme() {
 
 if (location.pathname.includes('dashboard.html')) {
     window.onload = loadDashboard;
+    loadLoanWidget();
+    loadMMWidget();
+    loadEmergencyWidget();
 } else if (location.pathname.includes('calendar.html')) {
     window.onload = loadCalendar;
 }
@@ -173,6 +176,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     if (location.pathname.includes('dashboard.html')) {
         loadDashboard();
+        loadLoanWidget();
+        loadMMWidget();
+        loadEmergencyWidget();
     } else if (location.pathname.includes('calendar.html')) {
         loadCalendar();
     }
@@ -221,3 +227,80 @@ function restoreMM(event) {
     };
     reader.readAsText(file);
 }
+
+function loadLoanWidget() {
+    const LOAN_TOTAL = 2000000;
+    const TOTAL_MONTHS = 60;
+    const payments = JSON.parse(localStorage.getItem('loanPayments')) || [];
+  
+    const totalPaid = payments.reduce((sum, p) => sum + Number(p.amount), 0);
+    const remaining = LOAN_TOTAL - totalPaid;
+    const paidPercent = (totalPaid / LOAN_TOTAL) * 100;
+    const monthsLeft = Math.max(TOTAL_MONTHS - payments.length, 0);
+    const isClosed = remaining <= 0 || monthsLeft === 0;
+  
+    document.getElementById('loanAmount').innerText = `LKR ${LOAN_TOTAL.toLocaleString()}`;
+    document.getElementById('loanRemaining').innerText = `LKR ${remaining.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+    document.getElementById('loanPaidPercent').innerText = `${paidPercent.toFixed(1)}%`;
+    document.getElementById('loanMonthsLeft').innerText = monthsLeft;
+    const statusEl = document.getElementById('loanStatus');
+    statusEl.innerText = isClosed ? 'Closed' : 'Active';
+    statusEl.style.color = isClosed ? 'green' : 'orange';
+  }
+  
+  function loadMMWidget() {
+    const mm = JSON.parse(localStorage.getItem('mmData'));
+    if (!mm || isNaN(mm.units) || isNaN(mm.price) || isNaN(mm.yield)) return;
+  
+    const { fundName, units, price, yield: annualYield } = mm;
+  
+    const marketValue = units * price;
+    const rate = annualYield / 100 / 365;
+    const oneWeekProfit = marketValue * (Math.pow(1 + rate, 7) - 1);
+    const oneMonthProfit = marketValue * (Math.pow(1 + rate, 30) - 1);
+  
+    document.getElementById('mmToday').innerText =
+      'LKR ' + marketValue.toLocaleString('en-LK', { minimumFractionDigits: 2 });
+  
+    document.getElementById('mmWeek').innerText =
+      'LKR ' + oneWeekProfit.toLocaleString('en-LK', { minimumFractionDigits: 2 });
+  
+    document.getElementById('mmMonth').innerText =
+      'LKR ' + oneMonthProfit.toLocaleString('en-LK', { minimumFractionDigits: 2 });
+  
+    const statusEl = document.getElementById('mmStatus');
+    statusEl.innerText = marketValue > 0 ? 'Active' : 'Inactive';
+    statusEl.style.color = marketValue > 0 ? 'orange' : 'green';
+  }
+  
+  
+  function loadEmergencyWidget() {
+    const data = JSON.parse(localStorage.getItem("emergencyFund")) || [];
+    const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+  
+    let totalFund = 0;
+    data.forEach(e => {
+      totalFund += e.type === 'add' ? e.amount : -e.amount;
+    });
+  
+    const months = new Set();
+    const monthlySums = {};
+    expenses.forEach(e => {
+      const d = new Date(e.date);
+      const key = d.getFullYear() + '-' + (d.getMonth() + 1);
+      if (!monthlySums[key]) monthlySums[key] = 0;
+      monthlySums[key] += e.amount;
+      months.add(key);
+    });
+  
+    const burn = months.size ? Object.values(monthlySums).reduce((a, b) => a + b, 0) / months.size : 0;
+    const survival = burn ? (totalFund / burn).toFixed(1) + " months" : '∞';
+    const status = totalFund > 0 ? "Active" : "Empty";
+  
+    document.getElementById("emFundTotal").innerText = "Rs. " + totalFund.toLocaleString('en-LK', { minimumFractionDigits: 2 });
+    document.getElementById("emBurnRate").innerText = "Rs. " + burn.toLocaleString('en-LK', { minimumFractionDigits: 2 });
+    document.getElementById("emSurvival").innerText = survival;
+    document.getElementById("emStatus").innerText = status;
+    document.getElementById("emStatus").style.color = totalFund > 0 ? 'orange' : 'green';
+  }
+  

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Finance Admin Dashboard</title>
@@ -8,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <nav>
         <div class="logo">💰 Finance Admin</div>
@@ -15,27 +17,102 @@
             <li><a href="dashboard.html" class="active">Dashboard</a></li>
             <li><a href="add_income.html">Add Income</a></li>
             <li><a href="add_expense.html">Add Expense</a></li>
-            <li><a href="calendar.html">Calendar</a></li>
             <li><a href="list.html">List</a></li>
             <li><a href="mm_account.html">MM Wealth</a></li>
             <li><a href="loan_details.html">Loan Details</a></li>
+            <li><a href="emergency_fund.html">Emergency Fund</a></li>
             <li><a href="settings.html">Settings</a></li>
-            <li><div class="theme-toggle">
-                <button id="themeToggleBtn" onclick="toggleTheme()">
-                  <span id="themeIcon">🌙</span>
-                </button>
-              </div></li>
+            <li>
+                <div class="theme-toggle">
+                    <button id="themeToggleBtn" onclick="toggleTheme()">
+                        <span id="themeIcon">🌙</span>
+                    </button>
+                </div>
+            </li>
         </ul>
     </nav>
 
     <main class="container">
         <h1>Dashboard</h1>
         <section class="cards">
-            <div class="card"><h2>💳 Cash in Bank</h2><p id="cashBank">$0</p></div>
-            <div class="card"><h2>🔥 Burn Rate</h2><p id="burnRate">$0</p></div>
-            <div class="card"><h2>💸 Expenses</h2><p id="expenses">$0</p></div>
-            <div class="card"><h2>📈 Solvency</h2><p id="solvency">$0</p></div>
+            <div class="card">
+                <h2>💳 Cash in Bank</h2>
+                <p id="cashBank">$0</p>
+            </div>
+            <div class="card">
+                <h2>🔥 Burn Rate</h2>
+                <p id="burnRate">$0</p>
+            </div>
+            <div class="card">
+                <h2>💸 Expenses</h2>
+                <p id="expenses">$0</p>
+            </div>
+            <div class="card">
+                <h2>📈 Solvency</h2>
+                <p id="solvency">$0</p>
+            </div>
+
         </section>
+
+        <section style="
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+">
+            <div class="card" style="
+    flex: 1 1 280px;
+    max-width: 400px;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    background: var(--card-bg);
+    color: var(--text-color);
+  ">
+                <h2 style="margin-top: 0;">🏦 Loan Summary</h2>
+                <p><strong>Loan Amount:</strong> <span id="loanAmount">-</span></p>
+                <p><strong>Remaining:</strong> <span id="loanRemaining">-</span></p>
+                <p><strong>Paid %:</strong> <span id="loanPaidPercent">-</span></p>
+                <p><strong>Months Left:</strong> <span id="loanMonthsLeft">-</span></p>
+                <p><strong>Status:</strong> <span id="loanStatus" style="font-weight: bold;">-</span></p>
+            </div>
+
+            <div class="card" style="
+    flex: 1 1 280px;
+    max-width: 400px;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    background: var(--card-bg);
+    color: var(--text-color);
+  ">
+                <h2 style="margin-top: 0;">💼 MM Wealth Summary</h2>
+                <p><strong>Today:</strong> <span id="mmToday">-</span></p>
+                <p><strong>+1 Week:</strong> <span id="mmWeek">-</span></p>
+                <p><strong>+1 Month:</strong> <span id="mmMonth">-</span></p>
+                <p><strong>Status:</strong> <span id="mmStatus" style="font-weight: bold; color: green;">Active</span>
+                </p>
+            </div>
+            <div class="card" style="
+            flex: 1 1 280px;
+            max-width: 400px;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: var(--card-bg);
+            color: var(--text-color);
+          ">
+                <h2 style="margin-top: 0;">🛡️ Emergency Fund</h2>
+                <p><strong>Total Fund:</strong> <span id="emFundTotal">-</span></p>
+                <p><strong>Burn Rate:</strong> <span id="emBurnRate">-</span></p>
+                <p><strong>Survival:</strong> <span id="emSurvival">-</span></p>
+                <p><strong>Status:</strong> <span id="emStatus" style="font-weight: bold;">-</span></p>
+            </div>
+        </section>
+
+
+
         <section class="chart-card card">
             <h2>📊 Monthly Trends</h2>
             <canvas id="trendChart" height="100"></canvas>
@@ -43,4 +120,5 @@
     </main>
     <script src="app.js" defer></script>
 </body>
+
 </html>
