@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Solar Investment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="applyTheme(); renderSolarInvestment()">
+    <nav>
+        <div class="logo">💰 Finance Admin</div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="add_income.html">Add Income</a></li>
+            <li><a href="add_expense.html">Add Expense</a></li>
+            <li><a href="list.html">List</a></li>
+            <li><a href="mm_account.html">MM Wealth</a></li>
+            <li><a href="loan_details.html">Loan Details</a></li>
+            <li><a href="emergency_fund.html">Emergency Fund</a></li>
+            <li><a href="solar_investment.html">Solar Investment</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li>
+                <div class="theme-toggle">
+                    <button id="themeToggleBtn" onclick="toggleTheme()">
+                        <span id="themeIcon">🌙</span>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+  <main class="container" style="max-width: 1000px;">
+    <h1>🔆 Solar Investment Tracker</h1>
+
+    <section class="card" style="margin-bottom: 1.5rem;">
+      <h2>📊 Summary</h2>
+      <p><strong>Project Cost:</strong> Rs. <span id="projectCost">3,000,000.00</span></p>
+      <p><strong>Unit Price:</strong> Rs. <span id="unitPrice">27.00</span></p>
+      <p><strong>Total Collected:</strong> Rs. <span id="totalIncome">0.00</span></p>
+      <p><strong>Recovery :</strong> <span id="recoveryPercent">0.00</span>%</p>
+      <p><strong>Estimated Recovery Time:</strong> <span id="recoveryYears">0.0</span> years</p>
+      <p><strong>Profit:</strong> Rs. <span id="profit">-3,000,000.00</span></p>
+    </section>
+
+    <section class="card" style="margin-bottom: 1.5rem;">
+      <h2>➕ Add Monthly Data</h2>
+      <div class="actions">
+        <input type="month" id="solarMonth">
+        <input type="number" id="solarUnits" placeholder="Units (kWh)">
+        <br>
+        <button onclick="addSolar()">Add Entry</button>
+        <button onclick="exportSolar()">⬇ Export</button>
+        <input type="file" onchange="importSolar(event)">
+        <button onclick="resetSolar()">♻️ Reset</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>📋 Monthly Records</h2>
+      <table>
+        <thead>
+          <tr><th>Month</th><th>Units</th><th>Income (Rs.)</th><th>Action</th></tr>
+        </thead>
+        <tbody id="solarTable"></tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script>
+    const SOLAR_KEY = "solarInvestment";
+    const RATE = 27.0;
+    const COST = 3000000;
+
+    function renderSolarInvestment() {
+      const data = JSON.parse(localStorage.getItem(SOLAR_KEY)) || [];
+      const tbody = document.getElementById("solarTable");
+      tbody.innerHTML = "";
+
+      let totalIncome = 0;
+      data.forEach((item, index) => {
+        const income = item.units * RATE;
+        totalIncome += income;
+        tbody.innerHTML += `
+          <tr>
+            <td>${item.month}</td>
+            <td>${item.units}</td>
+            <td>Rs. ${income.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+            <td><span class="delete-btn" style="color:red; cursor:pointer;" onclick="deleteSolar(${index})">🗑️</span></td>
+          </tr>
+        `;
+      });
+
+      const recoveryPercent = (totalIncome / COST) * 100;
+      const monthlyAvg = data.length ? totalIncome / data.length : 0;
+      const recoveryYears = monthlyAvg ? (COST / monthlyAvg) / 12 : 0;
+      const profit = totalIncome - COST;
+
+      document.getElementById("totalIncome").innerText = totalIncome.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById("recoveryPercent").innerText = recoveryPercent.toFixed(2);
+      document.getElementById("recoveryYears").innerText = recoveryYears.toFixed(1);
+      document.getElementById("profit").innerText = profit.toLocaleString(undefined, { minimumFractionDigits: 2 });
+    }
+
+    function addSolar() {
+      const month = document.getElementById("solarMonth").value;
+      const units = parseFloat(document.getElementById("solarUnits").value);
+      if (!month || isNaN(units) || units <= 0) return alert("Enter valid data");
+
+      const data = JSON.parse(localStorage.getItem(SOLAR_KEY)) || [];
+      data.push({ month, units });
+      localStorage.setItem(SOLAR_KEY, JSON.stringify(data));
+      renderSolarInvestment();
+    }
+
+    function deleteSolar(index) {
+      const data = JSON.parse(localStorage.getItem(SOLAR_KEY)) || [];
+      data.splice(index, 1);
+      localStorage.setItem(SOLAR_KEY, JSON.stringify(data));
+      renderSolarInvestment();
+    }
+
+    function exportSolar() {
+      const data = localStorage.getItem(SOLAR_KEY) || "[]";
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([data], { type: "application/json" }));
+      a.download = "solar_investment.json";
+      a.click();
+    }
+
+    function importSolar(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (Array.isArray(parsed)) {
+            localStorage.setItem(SOLAR_KEY, JSON.stringify(parsed));
+            renderSolarInvestment();
+            alert("✅ Imported successfully!");
+          } else throw new Error("Invalid format");
+        } catch (err) {
+          alert("❌ Invalid file format.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetSolar() {
+      if (confirm("Are you sure you want to reset all solar investment data?")) {
+        localStorage.removeItem(SOLAR_KEY);
+        renderSolarInvestment();
+      }
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      document.getElementById('themeIcon').innerText = isDark ? '🌞' : '🌙';
+    }
+
+    function applyTheme() {
+      const theme = localStorage.getItem("theme");
+      if (theme === "dark") document.body.classList.add('dark');
+    }
+  </script>
+</body>
+</html>

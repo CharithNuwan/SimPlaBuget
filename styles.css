@@ -151,3 +151,70 @@ nav {
     padding: 0.5rem;
 }
 
+<style>
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--nav-bg, #1f1f1f);
+    padding: 0 1rem;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--text-color);
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+  }
+
+  .nav-links li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links li a.active {
+    color: var(--accent, #6366f1); /* or your custom accent */
+  }
+
+  .theme-toggle {
+    margin-left: auto;
+  }
+
+  .theme-toggle button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text-color);
+    padding: 0.4rem;
+  }
+
+  @media (max-width: 768px) {
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .nav-links {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .theme-toggle {
+      align-self: flex-end;
+      margin-top: 0.5rem;
+    }
+  }
+</style>

@@ -304,3 +304,26 @@ function loadLoanWidget() {
     document.getElementById("emStatus").style.color = totalFund > 0 ? 'orange' : 'green';
   }
   
+
+  function loadSolarWidget() {
+    const RATE = 27;
+    const COST = 3000000;
+    const data = JSON.parse(localStorage.getItem("solarInvestment")) || [];
+
+    let total = 0;
+    data.forEach(entry => {
+      total += entry.units * RATE;
+    });
+
+    const recoveryPercent = (total / COST) * 100;
+    const avgMonthly = data.length ? total / data.length : 0;
+    const years = avgMonthly ? (COST / avgMonthly) / 12 : 0;
+    const profit = total - COST;
+
+    document.getElementById("solarTotal").innerText = total.toLocaleString(undefined, { minimumFractionDigits: 2 });
+    document.getElementById("solarRecovery").innerText = recoveryPercent.toFixed(2);
+    document.getElementById("solarYears").innerText = years.toFixed(1);
+    document.getElementById("solarProfit").innerText = profit.toLocaleString(undefined, { minimumFractionDigits: 2 });
+  }
+
+  document.addEventListener("DOMContentLoaded", loadSolarWidget);
