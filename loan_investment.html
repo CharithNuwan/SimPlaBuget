@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Loan-Based Investment Tracker</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>Loan Investment Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
   <style>
     .container {
       max-width: 1000px;
@@ -19,11 +18,6 @@
     h1, h2 {
       text-align: center;
       color: var(--accent);
-    }
-    input, button {
-      padding: 10px;
-      margin: 10px 5px;
-      width: 180px;
     }
     table {
       width: 100%;
@@ -39,147 +33,82 @@
       background-color: var(--accent);
       color: white;
     }
-    .summary {
-      margin: 1rem 0;
-      font-size: 1.2rem;
-    }
-    .actions {
+    .checkbox-cell {
       text-align: center;
-    }
-    .delete-btn {
-      color: red;
-      cursor: pointer;
-      font-weight: bold;
     }
   </style>
 </head>
-<body onload="applyTheme(); renderLoanInvestment()">
+<body onload="applyTheme(); renderLoanPlan()">
   <nav>
     <div class="logo">💰 Finance Admin</div>
     <ul class="nav-links">
       <li><a href="dashboard.html">Dashboard</a></li>
-      <li><a href="loan_investment.html" class="active">Loan Investment</a></li>
+      <li><a href="loan_plan.html" class="active">Loan Plan</a></li>
     </ul>
     <div class="theme-toggle">
-      <button id="themeToggleBtn" onclick="toggleTheme()">
-        <span id="themeIcon">🌙</span>
-      </button>
+      <button id="themeToggleBtn" onclick="toggleTheme()">🌙</button>
     </div>
   </nav>
 
   <main class="container">
-    <h1>💼 Loan-Based Investment Tracker</h1>
+    <h1>📆 Loan Investment Progress</h1>
 
-    <div class="summary">
-      <p><strong>Total Invested:</strong> Rs. <span id="totalInvested">0.00</span></p>
-      <p><strong>Total Return:</strong> Rs. <span id="totalReturn">0.00</span></p>
-      <p><strong>Net Profit:</strong> Rs. <span id="netProfit">0.00</span></p>
-    </div>
+    <p><strong>Total Investment:</strong> Rs. 2,000,000.00</p>
+    <p><strong>Monthly Profit:</strong> Rs. 100,000.00</p>
+    <p><strong>Duration:</strong> 12 months</p>
+    <p><strong>Total Return:</strong> Rs. 3,200,000.00 (including principal)</p>
 
-    <div class="actions">
-      <input type="number" id="invAmount" placeholder="Investment Amount">
-      <input type="number" id="monthlyProfit" placeholder="Monthly Profit">
-      <input type="number" id="duration" placeholder="Duration (months)">
-      <br>
-      <button onclick="addLoanInvestment()">➕ Add</button>
-      <button onclick="exportLoanInvestment()">⬇ Export</button>
-      <input type="file" onchange="importLoanInvestment(event)">
-      <button onclick="resetLoanInvestment()">♻️ Reset</button>
-    </div>
-
-    <h2>📋 Records</h2>
     <table>
       <thead>
-        <tr><th>Investment</th><th>Profit</th><th>Duration</th><th>Total Return</th><th>Action</th></tr>
+        <tr><th>Month</th><th>Expected Amount</th><th>Received</th></tr>
       </thead>
-      <tbody id="loanTable"></tbody>
+      <tbody id="loanProgressTable"></tbody>
     </table>
   </main>
 
   <script>
-    const LOAN_KEY = "loanInvestments";
+    const PLAN_KEY = "loanPlanProgress";
+    const months = 12;
+    const startDate = new Date();
+    const data = [];
 
-    function renderLoanInvestment() {
-      const data = JSON.parse(localStorage.getItem(LOAN_KEY)) || [];
-      const tbody = document.getElementById("loanTable");
-      tbody.innerHTML = "";
-
-      let invested = 0;
-      let returns = 0;
-      data.forEach((item, index) => {
-        const total = item.monthlyProfit * item.duration;
-        invested += item.amount;
-        returns += total;
-
-        tbody.innerHTML += `
-          <tr>
-            <td>Rs. ${item.amount.toLocaleString()}</td>
-            <td>Rs. ${item.monthlyProfit.toLocaleString()}</td>
-            <td>${item.duration} months</td>
-            <td>Rs. ${(total + item.amount).toLocaleString()}</td>
-            <td><span class="delete-btn" onclick="deleteLoanInvestment(${index})">🗑️</span></td>
-          </tr>
-        `;
-      });
-
-      document.getElementById("totalInvested").innerText = invested.toLocaleString(undefined, { minimumFractionDigits: 2 });
-      document.getElementById("totalReturn").innerText = returns.toLocaleString(undefined, { minimumFractionDigits: 2 });
-      document.getElementById("netProfit").innerText = (returns).toLocaleString(undefined, { minimumFractionDigits: 2 });
+    function getMonthLabel(offset) {
+      const date = new Date(startDate.getFullYear(), startDate.getMonth() + offset);
+      return date.toLocaleString('default', { month: 'short', year: 'numeric' });
     }
 
-    function addLoanInvestment() {
-      const amount = parseFloat(document.getElementById("invAmount").value);
-      const monthlyProfit = parseFloat(document.getElementById("monthlyProfit").value);
-      const duration = parseInt(document.getElementById("duration").value);
+    function renderLoanPlan() {
+      const table = document.getElementById("loanProgressTable");
+      const stored = JSON.parse(localStorage.getItem(PLAN_KEY)) || Array(months + 1).fill(false);
+      table.innerHTML = "";
 
-      if (!amount || !monthlyProfit || !duration) return alert("Invalid input");
-
-      const data = JSON.parse(localStorage.getItem(LOAN_KEY)) || [];
-      data.push({ amount, monthlyProfit, duration });
-      localStorage.setItem(LOAN_KEY, JSON.stringify(data));
-      renderLoanInvestment();
-    }
-
-    function deleteLoanInvestment(index) {
-      const data = JSON.parse(localStorage.getItem(LOAN_KEY)) || [];
-      data.splice(index, 1);
-      localStorage.setItem(LOAN_KEY, JSON.stringify(data));
-      renderLoanInvestment();
-    }
-
-    function exportLoanInvestment() {
-      const data = localStorage.getItem(LOAN_KEY) || "[]";
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(new Blob([data], { type: "application/json" }));
-      a.download = "loan_investment.json";
-      a.click();
-    }
-
-    function importLoanInvestment(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const parsed = JSON.parse(e.target.result);
-          if (Array.isArray(parsed)) {
-            localStorage.setItem(LOAN_KEY, JSON.stringify(parsed));
-            renderLoanInvestment();
-            alert("✅ Imported successfully!");
-          } else {
-            throw new Error("Invalid format");
-          }
-        } catch (err) {
-          alert("❌ Invalid file format.");
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    function resetLoanInvestment() {
-      if (confirm("Are you sure you want to reset all loan investment data?")) {
-        localStorage.removeItem(LOAN_KEY);
-        renderLoanInvestment();
+      for (let i = 0; i < months; i++) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${getMonthLabel(i)}</td>
+          <td>Rs. 100,000.00</td>
+          <td class="checkbox-cell">
+            <input type="checkbox" ${stored[i] ? "checked" : ""} onchange="toggleMonth(${i})" />
+          </td>`;
+        table.appendChild(row);
       }
+
+      // Add final principal return row
+      const finalRow = document.createElement("tr");
+      finalRow.innerHTML = `
+        <td>${getMonthLabel(months)} (Principal Return)</td>
+        <td>Rs. 2,000,000.00</td>
+        <td class="checkbox-cell">
+          <input type="checkbox" ${stored[months] ? "checked" : ""} onchange="toggleMonth(${months})" />
+        </td>`;
+      table.appendChild(finalRow);
+    }
+
+    function toggleMonth(index) {
+      const progress = JSON.parse(localStorage.getItem(PLAN_KEY)) || Array(months + 1).fill(false);
+      progress[index] = !progress[index];
+      localStorage.setItem(PLAN_KEY, JSON.stringify(progress));
+      renderLoanPlan();
     }
 
     function toggleTheme() {

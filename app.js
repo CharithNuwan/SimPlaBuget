@@ -327,3 +327,27 @@ function loadLoanWidget() {
   }
 
   document.addEventListener("DOMContentLoaded", loadSolarWidget);
+
+  function loadLoanInvestmentWidget() {
+    const data = JSON.parse(localStorage.getItem("loanInvestments")) || [];
+  
+    let totalInvestment = 0;
+    let totalReturns = 0;
+  
+    data.forEach(item => {
+      totalInvestment += item.amount;
+      totalReturns += item.monthly * item.duration * 12;
+    });
+  
+    const profit = totalReturns - totalInvestment;
+  
+    document.getElementById("loanInvTotal").innerText = totalInvestment.toLocaleString(undefined, { minimumFractionDigits: 2 });
+    document.getElementById("loanInvReturn").innerText = totalReturns.toLocaleString(undefined, { minimumFractionDigits: 2 });
+    document.getElementById("loanInvProfit").innerText = profit.toLocaleString(undefined, { minimumFractionDigits: 2 });
+  
+    const statusEl = document.getElementById("loanInvStatus");
+    statusEl.innerText = totalReturns > 0 ? "Active" : "Inactive";
+    statusEl.style.color = totalReturns > 0 ? "green" : "gray";
+  }
+  
+  document.addEventListener("DOMContentLoaded", loadLoanInvestmentWidget);

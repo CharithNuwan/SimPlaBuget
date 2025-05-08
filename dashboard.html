@@ -22,6 +22,7 @@
             <li><a href="loan_details.html">Loan Details</a></li>
             <li><a href="emergency_fund.html">Emergency Fund</a></li>
             <li><a href="solar_investment.html">Solar Investment</a></li>
+            <li><a href="loan_investment.html">Investment</a></li>
             <li><a href="settings.html">Settings</a></li>
             <li>
                 <div class="theme-toggle">
@@ -130,21 +131,23 @@
                 <p><strong>Status:</strong> <span style="font-weight: bold; color: orange;">Active</span></p>
             </div>
             <div class="card" style="
-            flex: 1 1 280px;
-            max-width: 400px;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            background: var(--card-bg);
-            color: var(--text-color);
-          ">
-                <h2 style="margin-top: 0;">🔆 Solar Summary</h2>
-                <p><strong>Total:</strong> Rs. <span id="solarTotal">-</span></p>
-                <p><strong>Recovery :</strong> <span id="solarRecovery">-</span>%</p>
-                <p><strong>Years:</strong> <span id="solarYears">-</span></p>
-                <p><strong>Profit:</strong> Rs. <span id="solarProfit">-</span></p>
-                <p><strong>Status:</strong> <span style="font-weight: bold; color: orange;">Active</span></p>
+  flex: 1 1 280px;
+  max-width: 400px;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 0.95rem;
+">
+                <h2 style="margin-top: 0;">💸 Loan-Based Investment</h2>
+                <p><strong>Invested:</strong> Rs. <span id="loanInvTotal">-</span></p>
+                <p><strong>Returns:</strong> Rs. <span id="loanInvReturn">-</span></p>
+                <p><strong>Profit:</strong> Rs. <span id="loanInvProfit">-</span></p>
+                <p><strong>Status:</strong> <span id="loanInvStatus"
+                        style="font-weight: bold; color: green;">Active</span></p>
             </div>
+
             <div class="card" style="
                     flex: 1 1 280px;
                     max-width: 400px;
@@ -162,10 +165,6 @@
                 <p><strong>Status:</strong> <span style="font-weight: bold; color: orange;">Active</span></p>
             </div>
         </section>
-
-
-
-
         <section class="chart-card card">
             <h2>📊 Monthly Trends</h2>
             <canvas id="trendChart" height="100"></canvas>
