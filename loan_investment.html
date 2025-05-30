@@ -53,10 +53,10 @@
   <main class="container">
     <h1>📆 Loan Investment Progress</h1>
 
-    <p><strong>Total Investment:</strong> Rs. 2,000,000.00</p>
-    <p><strong>Monthly Profit:</strong> Rs. 100,000.00</p>
+    <p><strong>Total Investment:</strong> Rs. 100</p>
+    <p><strong>Monthly Profit:</strong> Rs. 100</p>
     <p><strong>Duration:</strong> 12 months</p>
-    <p><strong>Total Return:</strong> Rs. 3,200,000.00 (including principal)</p>
+    <p><strong>Total Return:</strong> Rs. 100 (including principal)</p>
 
     <table>
       <thead>
@@ -86,7 +86,7 @@
         const row = document.createElement("tr");
         row.innerHTML = `
           <td>${getMonthLabel(i)}</td>
-          <td>Rs. 100,000.00</td>
+          <td>Rs. 100</td>
           <td class="checkbox-cell">
             <input type="checkbox" ${stored[i] ? "checked" : ""} onchange="toggleMonth(${i})" />
           </td>`;
@@ -97,7 +97,7 @@
       const finalRow = document.createElement("tr");
       finalRow.innerHTML = `
         <td>${getMonthLabel(months)} (Principal Return)</td>
-        <td>Rs. 1,000,000.00</td>
+        <td>Rs. 100</td>
         <td class="checkbox-cell">
           <input type="checkbox" ${stored[months] ? "checked" : ""} onchange="toggleMonth(${months})" />
         </td>`;

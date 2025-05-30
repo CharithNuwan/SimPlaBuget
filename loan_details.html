@@ -102,13 +102,13 @@
   <main class="loan-container">
     <h1>📄 Loan Details</h1>
     <div class="loan-details">
-      <div><strong>Outstanding Balance:</strong> LKR <span id="outstanding">2,000,000.00</span></div>
+      <div><strong>Outstanding Balance:</strong> LKR <span id="outstanding">100</span></div>
       <div><strong>Interest Rate:</strong> 13.5%</div>
-      <div><strong>Next Payment:</strong> LKR 46,020.00 on 03/06/2025</div>
-      <div><strong>Disbursement Amount:</strong> LKR 2,000,000.00</div>
+      <div><strong>Next Payment:</strong> LKR 00 on 03/06/2025</div>
+      <div><strong>Disbursement Amount:</strong> LKR 200</div>
       <div><strong>Expiry Date:</strong> 03/05/2030</div>
       <div><strong>Branch:</strong> 287 - EMBULDENIYA</div>
-      <div><strong>Account:</strong> 8025813735</div>
+      <div><strong>Account:</strong> 8025</div>
       <div><strong>Owner:</strong> MR CHARITHA NUWAN WIJETUNGA</div>
     </div>
 
@@ -133,8 +133,8 @@
   </main>
 
   <script>
-    const LOAN_INITIAL = 2000000;
-    const PAYMENT_AMOUNT = 46020;
+    const LOAN_INITIAL = 10000;
+    const PAYMENT_AMOUNT = 16020;
 
     function markLoanPaid() {
       const payments = JSON.parse(localStorage.getItem('loanPayments')) || [];
