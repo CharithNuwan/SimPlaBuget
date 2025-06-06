@@ -1,0 +1,1146 @@
+{
+  "incomes": [
+    {
+      "amount": 205000,
+      "note": "Salary",
+      "date": "2025-05-04T16:48:32.520Z"
+    },
+    {
+      "amount": 2000,
+      "note": "gave amma",
+      "date": "2025-05-05T01:45:15.002Z"
+    },
+    {
+      "amount": 170,
+      "note": "gave nis",
+      "date": "2025-05-05T01:45:29.968Z"
+    },
+    {
+      "amount": 9000,
+      "note": "SLIPS Tea Payment",
+      "date": "2025-05-06T19:32:54.057Z"
+    },
+    {
+      "amount": 240,
+      "note": "gave amma",
+      "date": "2025-05-07T01:01:43.866Z"
+    },
+    {
+      "amount": 5000,
+      "note": "amma gaive",
+      "date": "2025-05-08T15:17:51.643Z"
+    },
+    {
+      "amount": 5000,
+      "note": "Gave father dane",
+      "date": "2025-05-10T18:57:08.167Z"
+    },
+    {
+      "amount": 10000,
+      "note": "amma gave dane",
+      "date": "2025-05-10T19:13:36.299Z"
+    },
+    {
+      "amount": 5000,
+      "note": "Dad give for dane",
+      "date": "2025-05-12T15:01:27.598Z"
+    },
+    {
+      "amount": 3000,
+      "note": "amma gave for banis dane",
+      "date": "2025-05-12T15:04:24.466Z"
+    },
+    {
+      "amount": 1650,
+      "note": "transport office",
+      "date": "2025-05-16T15:51:06.707Z"
+    },
+    {
+      "amount": 13000,
+      "note": "dane amma gave",
+      "date": "2025-05-20T18:09:50.994Z"
+    },
+    {
+      "amount": 1600,
+      "note": "office transport",
+      "date": "2025-05-23T17:07:56.087Z"
+    },
+    {
+      "amount": 5000,
+      "note": "amma gave for water bill",
+      "date": "2025-05-23T18:00:52.310Z"
+    },
+    {
+      "amount": 5000,
+      "note": "nisnsala gave for water bill",
+      "date": "2025-05-23T18:01:13.386Z"
+    },
+    {
+      "amount": 5000,
+      "note": "maru gave 2900 dumi, for transport office",
+      "date": "2025-05-27T19:51:32.912Z"
+    },
+    {
+      "amount": 2370,
+      "note": "transport office, my pickme cost",
+      "date": "2025-05-27T19:52:12.281Z"
+    },
+    {
+      "amount": 1000,
+      "note": "amma gave",
+      "date": "2025-05-27T20:31:03.658Z"
+    },
+    {
+      "amount": 1660,
+      "note": "office transport",
+      "date": "2025-05-28T18:29:34.479Z"
+    },
+    {
+      "amount": 20000,
+      "note": "get from emgency",
+      "date": "2025-05-28T18:29:49.132Z"
+    },
+    {
+      "amount": 500,
+      "note": "get from dumiya",
+      "date": "2025-05-29T18:52:46.183Z"
+    },
+    {
+      "amount": 2100,
+      "note": "gave dade",
+      "date": "2025-05-30T18:33:20.185Z"
+    },
+    {
+      "amount": 3000,
+      "note": "get from emgcy found",
+      "date": "2025-06-01T19:23:03.636Z"
+    },
+    {
+      "amount": 5000,
+      "note": "gave dad",
+      "date": "2025-06-01T19:26:02.380Z"
+    },
+    {
+      "amount": 2000,
+      "note": "gave dad lorn",
+      "date": "2025-06-02T19:18:37.945Z"
+    },
+    {
+      "amount": 5000,
+      "note": "get from emgcy found",
+      "date": "2025-06-02T19:19:52.432Z"
+    },
+    {
+      "amount": 4919.8,
+      "note": "Tea Payment SLIP",
+      "date": "2025-06-04T16:13:45.136Z"
+    },
+    {
+      "amount": 3312,
+      "note": "PettyCash Office",
+      "date": "2025-06-04T16:14:04.786Z"
+    },
+    {
+      "amount": 100000,
+      "note": "Invest Payment Interest",
+      "date": "2025-06-04T16:16:21.759Z"
+    },
+    {
+      "amount": 205075,
+      "note": "Salary",
+      "date": "2025-06-05T14:18:08.691Z"
+    },
+    {
+      "amount": 10000,
+      "note": "Sittuwa akila aiya",
+      "date": "2025-06-05T15:09:15.672Z"
+    },
+    {
+      "amount": 5000,
+      "note": "Sittu Stefan",
+      "date": "2025-06-05T15:09:35.904Z"
+    },
+    {
+      "amount": 10000,
+      "note": "Sittu Chathurika",
+      "date": "2025-06-05T19:18:33.408Z"
+    },
+    {
+      "amount": 5000,
+      "note": "Sittu Damith",
+      "date": "2025-06-05T19:18:56.160Z"
+    },
+    {
+      "amount": 10000,
+      "note": "Sittu Saran",
+      "date": "2025-06-06T17:40:06.069Z"
+    },
+    {
+      "amount": 10000,
+      "note": "Sittu Dewanmini",
+      "date": "2025-06-06T17:40:23.711Z"
+    }
+  ],
+  "expenses": [
+    {
+      "amount": 1700,
+      "category": "food",
+      "date": "2025-05-04T16:49:08.341Z"
+    },
+    {
+      "amount": 10000,
+      "category": "loran charge",
+      "date": "2025-05-04T16:49:34.730Z"
+    },
+    {
+      "amount": 4500,
+      "category": "Batawala Tea Havesting fee",
+      "date": "2025-05-04T16:50:54.202Z"
+    },
+    {
+      "amount": 620,
+      "category": "food",
+      "date": "2025-05-05T01:38:22.856Z"
+    },
+    {
+      "amount": 880,
+      "category": "medicine",
+      "date": "2025-05-05T01:38:46.995Z"
+    },
+    {
+      "amount": 5000,
+      "category": "sittu",
+      "date": "2025-05-05T01:39:03.737Z"
+    },
+    {
+      "amount": 8000,
+      "category": "slt bill",
+      "date": "2025-05-05T01:40:36.401Z"
+    },
+    {
+      "amount": 100,
+      "category": "sms test",
+      "date": "2025-05-05T01:40:58.618Z"
+    },
+    {
+      "amount": 320,
+      "category": "food",
+      "date": "2025-05-05T01:41:15.162Z"
+    },
+    {
+      "amount": 500,
+      "category": "medicine",
+      "date": "2025-05-05T01:41:32.401Z"
+    },
+    {
+      "amount": 500,
+      "category": "fee for sarath (coconut havesting)",
+      "date": "2025-05-05T01:42:13.878Z"
+    },
+    {
+      "amount": 140,
+      "category": "food",
+      "date": "2025-05-05T01:42:28.503Z"
+    },
+    {
+      "amount": 480,
+      "category": "Vegetables",
+      "date": "2025-05-05T01:43:29.054Z"
+    },
+    {
+      "amount": 2793,
+      "category": "food and Other",
+      "date": "2025-05-05T01:43:59.292Z"
+    },
+    {
+      "amount": 1855,
+      "category": "food and Other",
+      "date": "2025-05-05T01:44:08.746Z"
+    },
+    {
+      "amount": 450,
+      "category": "Vegetables",
+      "date": "2025-05-05T01:44:26.543Z"
+    },
+    {
+      "amount": 240,
+      "category": "yoget",
+      "date": "2025-05-05T01:44:40.623Z"
+    },
+    {
+      "amount": 3179,
+      "category": "fuel bick",
+      "date": "2025-05-05T01:45:00.621Z"
+    },
+    {
+      "amount": 1170,
+      "category": "chiken KFC",
+      "date": "2025-05-05T19:04:01.265Z"
+    },
+    {
+      "amount": 2190,
+      "category": "dehi kapanna",
+      "date": "2025-05-06T17:12:21.239Z"
+    },
+    {
+      "amount": 1000,
+      "category": "GPT Plus",
+      "date": "2025-05-06T19:33:06.970Z"
+    },
+    {
+      "amount": 1880,
+      "category": "Gul kalawal 2ki /WINE STORE",
+      "date": "2025-05-07T19:11:37.091Z"
+    },
+    {
+      "amount": 750,
+      "category": "PMT LOAN 3932032",
+      "date": "2025-05-08T00:25:36.724Z"
+    },
+    {
+      "amount": 1060,
+      "category": "food Kottu office",
+      "date": "2025-05-08T15:18:09.754Z"
+    },
+    {
+      "amount": 400,
+      "category": "Mobitel phone bill",
+      "date": "2025-05-08T15:18:36.944Z"
+    },
+    {
+      "amount": 600,
+      "category": "Happy Food",
+      "date": "2025-05-08T15:18:50.647Z"
+    },
+    {
+      "amount": 399,
+      "category": "pdf and audio",
+      "date": "2025-05-09T00:49:58.572Z"
+    },
+    {
+      "amount": 1000,
+      "category": "Water bill",
+      "date": "2025-05-09T08:48:28.875Z"
+    },
+    {
+      "amount": 4000,
+      "category": "Water bill",
+      "date": "2025-05-09T08:48:36.158Z"
+    },
+    {
+      "amount": 80,
+      "category": "Kurankan Kada",
+      "date": "2025-05-09T08:48:54.815Z"
+    },
+    {
+      "amount": 13000,
+      "category": "Bick Service",
+      "date": "2025-05-10T18:42:28.532Z"
+    },
+    {
+      "amount": 40,
+      "category": "Bick air tier",
+      "date": "2025-05-10T18:42:52.235Z"
+    },
+    {
+      "amount": 600,
+      "category": "rice",
+      "date": "2025-05-10T18:44:32.727Z"
+    },
+    {
+      "amount": 3600,
+      "category": "onion 22.5k dane",
+      "date": "2025-05-10T18:46:25.097Z"
+    },
+    {
+      "amount": 2603,
+      "category": "potato 13.7k dane",
+      "date": "2025-05-10T18:47:00.086Z"
+    },
+    {
+      "amount": 5610,
+      "category": "Arthike thoga Kade",
+      "date": "2025-05-10T18:47:53.102Z"
+    },
+    {
+      "amount": 2260,
+      "category": "Sathosa",
+      "date": "2025-05-10T18:48:36.065Z"
+    },
+    {
+      "amount": 10965,
+      "category": "food and Other Sudu arliya",
+      "date": "2025-05-10T18:49:43.596Z"
+    },
+    {
+      "amount": 946,
+      "category": "Arthike alawalu",
+      "date": "2025-05-10T18:50:16.540Z"
+    },
+    {
+      "amount": 280,
+      "category": "fast food SJ Super ",
+      "date": "2025-05-10T18:51:10.335Z"
+    },
+    {
+      "amount": 689,
+      "category": "Arthike SSL alawalu",
+      "date": "2025-05-10T18:52:00.395Z"
+    },
+    {
+      "amount": 1140,
+      "category": "Pet Store 5% Homagama Shampoo dog",
+      "date": "2025-05-10T18:53:03.193Z"
+    },
+    {
+      "amount": 850,
+      "category": "prasad change amma gave",
+      "date": "2025-05-10T18:53:41.222Z"
+    },
+    {
+      "amount": 1900,
+      "category": "Coconut oil  1 * 950lr",
+      "date": "2025-05-10T18:55:24.949Z"
+    },
+    {
+      "amount": 1000,
+      "category": "fuel car",
+      "date": "2025-05-10T18:55:39.178Z"
+    },
+    {
+      "amount": 180,
+      "category": "food",
+      "date": "2025-05-10T18:55:49.956Z"
+    },
+    {
+      "amount": 140,
+      "category": "food",
+      "date": "2025-05-10T18:55:59.758Z"
+    },
+    {
+      "amount": 160,
+      "category": "Thuna paha 100g",
+      "date": "2025-05-10T18:56:24.321Z"
+    },
+    {
+      "amount": 398,
+      "category": "Alawalu Homagama",
+      "date": "2025-05-10T18:56:40.176Z"
+    },
+    {
+      "amount": 2190,
+      "category": "KFC chikan kottawa",
+      "date": "2025-05-10T18:58:28.269Z"
+    },
+    {
+      "amount": 1665.25,
+      "category": "Godagama Super Center",
+      "date": "2025-05-10T18:59:22.809Z"
+    },
+    {
+      "amount": 420,
+      "category": "Sanoda alovera face jel 15g",
+      "date": "2025-05-10T19:00:48.606Z"
+    },
+    {
+      "amount": 500,
+      "category": "food Keels godagama",
+      "date": "2025-05-10T19:02:29.280Z"
+    },
+    {
+      "amount": 2280,
+      "category": "fuel bick",
+      "date": "2025-05-10T19:06:22.947Z"
+    },
+    {
+      "amount": 4000,
+      "category": "Ice Cream Dansala",
+      "date": "2025-05-10T19:40:06.076Z"
+    },
+    {
+      "amount": 4100,
+      "category": "gas dane",
+      "date": "2025-05-12T15:02:44.068Z"
+    },
+    {
+      "amount": 340,
+      "category": "biee lunu",
+      "date": "2025-05-12T15:03:00.902Z"
+    },
+    {
+      "amount": 450,
+      "category": "rathu lunu dane",
+      "date": "2025-05-12T15:03:18.963Z"
+    },
+    {
+      "amount": 190,
+      "category": "sergical mas dane",
+      "date": "2025-05-12T15:03:33.363Z"
+    },
+    {
+      "amount": 400,
+      "category": "banis dane",
+      "date": "2025-05-12T15:04:37.404Z"
+    },
+    {
+      "amount": 500,
+      "category": "wada karapu kena dane",
+      "date": "2025-05-12T15:04:55.442Z"
+    },
+    {
+      "amount": 310,
+      "category": "Kaha paket dane",
+      "date": "2025-05-12T15:05:34.676Z"
+    },
+    {
+      "amount": 500,
+      "category": "gas lipa dane",
+      "date": "2025-05-12T15:05:48.805Z"
+    },
+    {
+      "amount": 1000,
+      "category": "gave amma",
+      "date": "2025-05-12T15:06:07.286Z"
+    },
+    {
+      "amount": 10000,
+      "category": "gave amma for dane",
+      "date": "2025-05-12T15:06:27.283Z"
+    },
+    {
+      "amount": 648,
+      "category": "colcolet cake dane",
+      "date": "2025-05-12T15:13:21.383Z"
+    },
+    {
+      "amount": 480,
+      "category": "pan dane",
+      "date": "2025-05-12T15:13:32.696Z"
+    },
+    {
+      "amount": 800,
+      "category": " sangaha (sudu araliya) dane",
+      "date": "2025-05-12T15:14:08.963Z"
+    },
+    {
+      "amount": 470,
+      "category": "ice cream/food",
+      "date": "2025-05-13T10:52:43.442Z"
+    },
+    {
+      "amount": 20,
+      "category": "donetion",
+      "date": "2025-05-13T18:21:56.041Z"
+    },
+    {
+      "amount": 150,
+      "category": "bus fee",
+      "date": "2025-05-13T18:22:17.359Z"
+    },
+    {
+      "amount": 150,
+      "category": "donetion",
+      "date": "2025-05-13T18:22:26.115Z"
+    },
+    {
+      "amount": 200,
+      "category": "bus fee",
+      "date": "2025-05-13T18:22:47.961Z"
+    },
+    {
+      "amount": 2100,
+      "category": "food hangry bell",
+      "date": "2025-05-13T18:23:04.406Z"
+    },
+    {
+      "amount": 100,
+      "category": "service fee hangry bell",
+      "date": "2025-05-13T18:23:24.552Z"
+    },
+    {
+      "amount": 700,
+      "category": "food",
+      "date": "2025-05-14T15:43:50.274Z"
+    },
+    {
+      "amount": 1000,
+      "category": "donation office",
+      "date": "2025-05-15T18:56:54.331Z"
+    },
+    {
+      "amount": 200,
+      "category": "chiken food",
+      "date": "2025-05-15T18:57:07.181Z"
+    },
+    {
+      "amount": 180,
+      "category": "masala food",
+      "date": "2025-05-15T18:57:22.998Z"
+    },
+    {
+      "amount": 120,
+      "category": "hawasa food office",
+      "date": "2025-05-15T18:57:46.959Z"
+    },
+    {
+      "amount": 300,
+      "category": "fruit salad office, food",
+      "date": "2025-05-16T15:46:54.968Z"
+    },
+    {
+      "amount": 300,
+      "category": "nelli office, food",
+      "date": "2025-05-16T15:47:10.774Z"
+    },
+    {
+      "amount": 279,
+      "category": "keels food",
+      "date": "2025-05-16T15:47:57.336Z"
+    },
+    {
+      "amount": 142,
+      "category": "medicining keels",
+      "date": "2025-05-16T15:49:51.200Z"
+    },
+    {
+      "amount": 220,
+      "category": "gave to nisansal ",
+      "date": "2025-05-16T15:50:14.932Z"
+    },
+    {
+      "amount": 550,
+      "category": "chiken food",
+      "date": "2025-05-16T15:50:33.492Z"
+    },
+    {
+      "amount": 900,
+      "category": "dry clean court",
+      "date": "2025-05-17T17:32:38.391Z"
+    },
+    {
+      "amount": 60,
+      "category": "fish food",
+      "date": "2025-05-17T17:32:48.933Z"
+    },
+    {
+      "amount": 450,
+      "category": "food",
+      "date": "2025-05-17T17:33:15.176Z"
+    },
+    {
+      "amount": 2850,
+      "category": "Rich dad book sarasavi kottawa",
+      "date": "2025-05-17T17:34:12.498Z"
+    },
+    {
+      "amount": 550,
+      "category": "chicken food",
+      "date": "2025-05-17T17:34:27.692Z"
+    },
+    {
+      "amount": 1300,
+      "category": "kiri samaba food",
+      "date": "2025-05-19T00:44:03.270Z"
+    },
+    {
+      "amount": 1510,
+      "category": "kiri pity and tea food",
+      "date": "2025-05-19T00:44:44.060Z"
+    },
+    {
+      "amount": 1550,
+      "category": "chiken food",
+      "date": "2025-05-19T00:45:04.096Z"
+    },
+    {
+      "amount": 12150,
+      "category": "Vision care homagam",
+      "date": "2025-05-19T00:46:20.613Z"
+    },
+    {
+      "amount": 7762.5,
+      "category": "gps traker/ motoma",
+      "date": "2025-05-19T00:46:53.436Z"
+    },
+    {
+      "amount": 3196,
+      "category": "fuel bick",
+      "date": "2025-05-19T00:47:19.106Z"
+    },
+    {
+      "amount": 350,
+      "category": "SJ super food",
+      "date": "2025-05-19T00:47:44.639Z"
+    },
+    {
+      "amount": 1418,
+      "category": "fish / food",
+      "date": "2025-05-19T00:48:59.950Z"
+    },
+    {
+      "amount": 70,
+      "category": "SJ Super food",
+      "date": "2025-05-20T18:01:50.165Z"
+    },
+    {
+      "amount": 1260,
+      "category": "PV Traders food",
+      "date": "2025-05-20T18:02:39.063Z"
+    },
+    {
+      "amount": 1150,
+      "category": "rice hungribell food",
+      "date": "2025-05-20T18:03:42.425Z"
+    },
+    {
+      "amount": 1012,
+      "category": "NS Traders, Alavalu food",
+      "date": "2025-05-20T18:04:59.842Z"
+    },
+    {
+      "amount": 295,
+      "category": "PV Traders food",
+      "date": "2025-05-20T18:05:31.370Z"
+    },
+    {
+      "amount": 547.6,
+      "category": "SSL alavalu food",
+      "date": "2025-05-20T18:06:15.001Z"
+    },
+    {
+      "amount": 1720.04,
+      "category": "Pikme office (Trip ID - 1008000760 )",
+      "date": "2025-05-20T18:08:20.269Z"
+    },
+    {
+      "amount": 602.67,
+      "category": "Pikme Office (Trip ID - 1009840790)",
+      "date": "2025-05-20T18:09:02.948Z"
+    },
+    {
+      "amount": 105,
+      "category": "Smoke ",
+      "date": "2025-05-20T18:09:24.477Z"
+    },
+    {
+      "amount": 400,
+      "category": "mobile payment",
+      "date": "2025-05-20T18:12:27.847Z"
+    },
+    {
+      "amount": 250,
+      "category": "naya kate office",
+      "date": "2025-05-21T19:33:44.897Z"
+    },
+    {
+      "amount": 300,
+      "category": "pizza slices office",
+      "date": "2025-05-21T19:34:02.157Z"
+    },
+    {
+      "amount": 270,
+      "category": "office night food",
+      "date": "2025-05-21T19:34:22.717Z"
+    },
+    {
+      "amount": 170,
+      "category": "Smoke",
+      "date": "2025-05-22T16:48:08.647Z"
+    },
+    {
+      "amount": 3300,
+      "category": "bick fuel",
+      "date": "2025-05-23T17:05:51.064Z"
+    },
+    {
+      "amount": 570,
+      "category": "food",
+      "date": "2025-05-23T17:06:04.878Z"
+    },
+    {
+      "amount": 100,
+      "category": "masala kagu",
+      "date": "2025-05-23T17:06:34.206Z"
+    },
+    {
+      "amount": 390,
+      "category": "date jues",
+      "date": "2025-05-23T17:06:44.205Z"
+    },
+    {
+      "amount": 1000,
+      "category": "sara bithday",
+      "date": "2025-05-23T17:06:55.900Z"
+    },
+    {
+      "amount": 4905,
+      "category": "behethbadu kade",
+      "date": "2025-05-23T17:07:31.452Z"
+    },
+    {
+      "amount": 10000,
+      "category": "water bill utility",
+      "date": "2025-05-23T18:01:46.748Z"
+    },
+    {
+      "amount": 170,
+      "category": "Smoke",
+      "date": "2025-05-24T02:50:58.787Z"
+    },
+    {
+      "amount": 100,
+      "category": "donethion",
+      "date": "2025-05-24T06:08:48.253Z"
+    },
+    {
+      "amount": 260,
+      "category": "food",
+      "date": "2025-05-25T17:54:47.989Z"
+    },
+    {
+      "amount": 200,
+      "category": "food",
+      "date": "2025-05-25T17:54:56.062Z"
+    },
+    {
+      "amount": 1000,
+      "category": "poltel food",
+      "date": "2025-05-25T17:55:09.810Z"
+    },
+    {
+      "amount": 300,
+      "category": "food",
+      "date": "2025-05-25T17:55:17.013Z"
+    },
+    {
+      "amount": 150,
+      "category": "bethbadu kade",
+      "date": "2025-05-25T17:55:30.203Z"
+    },
+    {
+      "amount": 150,
+      "category": "ratakagu",
+      "date": "2025-05-25T17:55:44.262Z"
+    },
+    {
+      "amount": 350,
+      "category": "food",
+      "date": "2025-05-25T17:55:56.164Z"
+    },
+    {
+      "amount": 250,
+      "category": "sambarani",
+      "date": "2025-05-25T17:56:06.729Z"
+    },
+    {
+      "amount": 160,
+      "category": "dunkudu",
+      "date": "2025-05-25T17:56:18.900Z"
+    },
+    {
+      "amount": 150,
+      "category": "bread food",
+      "date": "2025-05-25T17:56:32.360Z"
+    },
+    {
+      "amount": 50,
+      "category": "nisansala",
+      "date": "2025-05-25T17:56:42.747Z"
+    },
+    {
+      "amount": 2000,
+      "category": "nisnsana ththata",
+      "date": "2025-05-25T17:57:02.129Z"
+    },
+    {
+      "amount": 1050,
+      "category": "mal pochi",
+      "date": "2025-05-25T17:57:18.566Z"
+    },
+    {
+      "amount": 260,
+      "category": "alawalu",
+      "date": "2025-05-25T17:57:29.424Z"
+    },
+    {
+      "amount": 40,
+      "category": "ana",
+      "date": "2025-05-25T17:57:41.259Z"
+    },
+    {
+      "amount": 2350,
+      "category": "thathta",
+      "date": "2025-05-25T17:58:22.862Z"
+    },
+    {
+      "amount": 1406,
+      "category": "ligth bulb and wire",
+      "date": "2025-05-25T17:59:25.296Z"
+    },
+    {
+      "amount": 700,
+      "category": "food",
+      "date": "2025-05-26T19:17:22.709Z"
+    },
+    {
+      "amount": 2900,
+      "category": "gave dumi ,maru wala 5000",
+      "date": "2025-05-27T19:50:59.868Z"
+    },
+    {
+      "amount": 170,
+      "category": "Smoke",
+      "date": "2025-05-27T19:52:46.772Z"
+    },
+    {
+      "amount": 14413.11,
+      "category": "TRW Payment $46.45",
+      "date": "2025-05-27T20:23:28.038Z"
+    },
+    {
+      "amount": 170,
+      "category": "Smoke",
+      "date": "2025-05-28T18:30:15.404Z"
+    },
+    {
+      "amount": 2823,
+      "category": "fuel bick CC payment",
+      "date": "2025-05-29T18:51:27.713Z"
+    },
+    {
+      "amount": 170,
+      "category": "Smoke",
+      "date": "2025-05-29T18:52:29.614Z"
+    },
+    {
+      "amount": 999,
+      "category": "PURCHASE LANKA SATHOSA MEEGO ",
+      "date": "2025-05-29T19:06:50.090Z"
+    },
+    {
+      "amount": 1000,
+      "category": "gave amma",
+      "date": "2025-05-30T18:29:30.957Z"
+    },
+    {
+      "amount": 170,
+      "category": "Smoke",
+      "date": "2025-05-30T18:29:52.314Z"
+    },
+    {
+      "amount": 500,
+      "category": "gave dumi naya",
+      "date": "2025-05-30T18:30:15.654Z"
+    },
+    {
+      "amount": 3500,
+      "category": "bus feir katragama highway",
+      "date": "2025-05-30T18:31:03.673Z"
+    },
+    {
+      "amount": 360,
+      "category": "nomal bus faire",
+      "date": "2025-05-30T18:31:58.372Z"
+    },
+    {
+      "amount": 500,
+      "category": "egg rice",
+      "date": "2025-05-30T18:32:10.063Z"
+    },
+    {
+      "amount": 240,
+      "category": "string hoppers",
+      "date": "2025-05-30T18:32:57.905Z"
+    },
+    {
+      "amount": 170,
+      "category": "Smoke",
+      "date": "2025-06-01T19:23:17.512Z"
+    },
+    {
+      "amount": 3390,
+      "category": "bick jacet, CC",
+      "date": "2025-06-01T19:24:04.573Z"
+    },
+    {
+      "amount": 120,
+      "category": "Kandos CC",
+      "date": "2025-06-01T19:24:34.553Z"
+    },
+    {
+      "amount": 500,
+      "category": "Kandos CC",
+      "date": "2025-06-01T19:24:49.519Z"
+    },
+    {
+      "amount": 1280,
+      "category": "food CC",
+      "date": "2025-06-01T19:25:01.763Z"
+    },
+    {
+      "amount": 3800,
+      "category": "bus Highway",
+      "date": "2025-06-01T19:25:30.942Z"
+    },
+    {
+      "amount": 500,
+      "category": "three weel",
+      "date": "2025-06-01T19:25:44.129Z"
+    },
+    {
+      "amount": 46020,
+      "category": "Loran Payment",
+      "date": "2025-06-02T19:16:55.272Z"
+    },
+    {
+      "amount": 400,
+      "category": "food",
+      "date": "2025-06-02T19:17:32.452Z"
+    },
+    {
+      "amount": 100,
+      "category": "food",
+      "date": "2025-06-02T19:17:37.594Z"
+    },
+    {
+      "amount": 80,
+      "category": "food",
+      "date": "2025-06-02T19:17:43.606Z"
+    },
+    {
+      "amount": 1150,
+      "category": "rice food",
+      "date": "2025-06-02T19:18:03.749Z"
+    },
+    {
+      "amount": 1473,
+      "category": "food CC",
+      "date": "2025-06-02T19:18:14.992Z"
+    },
+    {
+      "amount": 160,
+      "category": "Smoke",
+      "date": "2025-06-02T19:18:55.620Z"
+    },
+    {
+      "amount": 800,
+      "category": "food",
+      "date": "2025-06-04T16:11:38.909Z"
+    },
+    {
+      "amount": 160,
+      "category": "Smoke",
+      "date": "2025-06-04T16:11:52.950Z"
+    },
+    {
+      "amount": 160,
+      "category": "Smoke",
+      "date": "2025-06-04T16:12:01.875Z"
+    },
+    {
+      "amount": 40,
+      "category": "bick air",
+      "date": "2025-06-04T16:12:12.082Z"
+    },
+    {
+      "amount": 1400,
+      "category": "hair Cut (Isuru salon)",
+      "date": "2025-06-04T16:14:49.600Z"
+    },
+    {
+      "amount": 425,
+      "category": "food",
+      "date": "2025-06-04T16:15:01.723Z"
+    },
+    {
+      "amount": 380,
+      "category": "food",
+      "date": "2025-06-05T15:08:42.488Z"
+    },
+    {
+      "amount": 300,
+      "category": "food",
+      "date": "2025-06-05T15:08:56.058Z"
+    },
+    {
+      "amount": 8300,
+      "category": "Sudu Araliya food",
+      "date": "2025-06-05T19:42:01.339Z"
+    },
+    {
+      "amount": 200,
+      "category": "Keels Pharmacy medicine",
+      "date": "2025-06-05T19:42:42.456Z"
+    },
+    {
+      "amount": 1573.32,
+      "category": "Keels food",
+      "date": "2025-06-05T19:43:20.541Z"
+    },
+    {
+      "amount": 2936,
+      "category": "PV Trages food / dry",
+      "date": "2025-06-05T19:46:07.539Z"
+    },
+    {
+      "amount": 1623,
+      "category": "Fruit food",
+      "date": "2025-06-05T19:46:55.272Z"
+    },
+    {
+      "amount": 264,
+      "category": "alcavala food",
+      "date": "2025-06-05T19:47:30.133Z"
+    },
+    {
+      "amount": 1981.3,
+      "category": "Alavalu food",
+      "date": "2025-06-05T19:48:17.045Z"
+    },
+    {
+      "amount": 6135,
+      "category": "Udula food",
+      "date": "2025-06-05T19:49:23.754Z"
+    },
+    {
+      "amount": 180,
+      "category": "Alavalu food",
+      "date": "2025-06-06T17:41:49.030Z"
+    },
+    {
+      "amount": 180,
+      "category": "badapu kadala food",
+      "date": "2025-06-06T17:42:02.031Z"
+    },
+    {
+      "amount": 600,
+      "category": "egg 20 / food",
+      "date": "2025-06-06T17:42:21.417Z"
+    },
+    {
+      "amount": 170,
+      "category": "Smoke",
+      "date": "2025-06-06T17:42:37.853Z"
+    },
+    {
+      "amount": 160,
+      "category": "Smoke",
+      "date": "2025-06-06T17:42:43.026Z"
+    },
+    {
+      "amount": 1000,
+      "category": "food",
+      "date": "2025-06-06T17:42:55.291Z"
+    },
+    {
+      "amount": 200,
+      "category": "food",
+      "date": "2025-06-06T17:43:05.392Z"
+    },
+    {
+      "amount": 160,
+      "category": "Smoke",
+      "date": "2025-06-06T17:43:13.503Z"
+    }
+  ]
+}
