@@ -267,7 +267,7 @@ function restoreMM(event) {
 }
 
 function loadLoanWidget() {
-    const LOAN_TOTAL = 2000000;
+    const LOAN_TOTAL = 1000;
     const TOTAL_MONTHS = 60;
     const payments = JSON.parse(localStorage.getItem('loanPayments')) || [];
   
@@ -345,7 +345,7 @@ function loadLoanWidget() {
 
   function loadSolarWidget() {
     const RATE = 27;
-    const COST = 3000000;
+    const COST = 100;
     const data = JSON.parse(localStorage.getItem("solarInvestment")) || [];
 
     let total = 0;
