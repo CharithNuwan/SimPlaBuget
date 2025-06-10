@@ -6,6 +6,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
   <style>
+    :root {
+      --card-bg: #ffffff;
+      --text-color: #333;
+      --accent: #0077cc;
+    }
+    body.dark {
+      --card-bg: #1e1e1e;
+      --text-color: #ddd;
+      --accent: #00bfff;
+      background-color: #121212;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f0f0f0;
+      color: var(--text-color);
+    }
+    nav {
+      background: var(--accent);
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+    }
+    .nav-links a.active {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    .theme-toggle button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
     .container {
       max-width: 1000px;
       margin: 2rem auto;
@@ -13,27 +60,60 @@
       background: var(--card-bg);
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      color: var(--text-color);
     }
+
     h1, h2 {
       text-align: center;
       color: var(--accent);
     }
+
+    form {
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    input[type="number"] {
+      padding: 8px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    button[type="submit"] {
+      width: fit-content;
+      padding: 10px 16px;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1rem;
     }
+
     th, td {
       padding: 10px;
       border-bottom: 1px solid #ccc;
       text-align: left;
     }
+
     th {
       background-color: var(--accent);
       color: white;
     }
+
     .checkbox-cell {
+      text-align: center;
+    }
+
+    .progress {
+      margin-top: 1rem;
+      font-weight: bold;
       text-align: center;
     }
   </style>
@@ -53,59 +133,105 @@
   <main class="container">
     <h1>📆 Loan Investment Progress</h1>
 
-    <p><strong>Total Investment:</strong> Rs. 100</p>
-    <p><strong>Monthly Profit:</strong> Rs. 100</p>
-    <p><strong>Duration:</strong> 12 months</p>
-    <p><strong>Total Return:</strong> Rs. 100 (including principal)</p>
+    <h2>📋 Add Loan Details</h2>
+    <form id="loanForm" onsubmit="saveLoanDetails(event)">
+      <label>Total Investment:
+        <input type="number" id="totalInvestment" required />
+      </label>
+      <label>Monthly Profit:
+        <input type="number" id="monthlyProfit" required />
+      </label>
+      <label>Duration (months):
+        <input type="number" id="duration" required />
+      </label>
+      <button type="submit">Generate Plan</button>
+    </form>
 
+    <div id="summary"></div>
     <table>
       <thead>
         <tr><th>Month</th><th>Expected Amount</th><th>Received</th></tr>
       </thead>
       <tbody id="loanProgressTable"></tbody>
     </table>
+
+    <div class="progress" id="progressSummary"></div>
   </main>
 
   <script>
     const PLAN_KEY = "loanPlanProgress";
-    const months = 12;
-    const startDate = new Date();
-    const data = [];
+    const CONFIG_KEY = "loanPlanConfig";
 
-    function getMonthLabel(offset) {
+    function saveLoanDetails(event) {
+      event.preventDefault();
+      const investment = parseFloat(document.getElementById("totalInvestment").value);
+      const monthly = parseFloat(document.getElementById("monthlyProfit").value);
+      const duration = parseInt(document.getElementById("duration").value);
+
+      const config = { investment, monthly, duration, startDate: new Date().toISOString() };
+      localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+      localStorage.setItem(PLAN_KEY, JSON.stringify(Array(duration + 1).fill(false))); // +1 for principal return
+      renderLoanPlan();
+    }
+
+    function getMonthLabel(offset, startDateStr) {
+      const startDate = new Date(startDateStr);
       const date = new Date(startDate.getFullYear(), startDate.getMonth() + offset);
       return date.toLocaleString('default', { month: 'short', year: 'numeric' });
     }
 
     function renderLoanPlan() {
+      const config = JSON.parse(localStorage.getItem(CONFIG_KEY));
+      if (!config) {
+        document.getElementById("loanProgressTable").innerHTML = "<tr><td colspan='3'>Please add loan details to see progress.</td></tr>";
+        document.getElementById("summary").innerHTML = "";
+        document.getElementById("progressSummary").innerText = "";
+        return;
+      }
+
+      const { investment, monthly, duration, startDate } = config;
+      const stored = JSON.parse(localStorage.getItem(PLAN_KEY)) || Array(duration + 1).fill(false);
       const table = document.getElementById("loanProgressTable");
-      const stored = JSON.parse(localStorage.getItem(PLAN_KEY)) || Array(months + 1).fill(false);
       table.innerHTML = "";
 
-      for (let i = 0; i < months; i++) {
+      document.getElementById("summary").innerHTML = `
+        <p><strong>Total Investment:</strong> Rs. ${investment.toLocaleString(undefined, {minimumFractionDigits:2})}</p>
+        <p><strong>Monthly Profit:</strong> Rs. ${monthly.toLocaleString(undefined, {minimumFractionDigits:2})}</p>
+        <p><strong>Duration:</strong> ${duration} months</p>
+        <p><strong>Total Return:</strong> Rs. ${(monthly * duration + investment).toLocaleString(undefined, {minimumFractionDigits:2})} (including principal)</p>
+      `;
+
+      for (let i = 0; i < duration; i++) {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${getMonthLabel(i)}</td>
-          <td>Rs. 100</td>
+          <td>${getMonthLabel(i, startDate)}</td>
+          <td>Rs. ${monthly.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
           <td class="checkbox-cell">
             <input type="checkbox" ${stored[i] ? "checked" : ""} onchange="toggleMonth(${i})" />
           </td>`;
         table.appendChild(row);
       }
 
-      // Add final principal return row
+      // Final principal row
       const finalRow = document.createElement("tr");
       finalRow.innerHTML = `
-        <td>${getMonthLabel(months)} (Principal Return)</td>
-        <td>Rs. 100</td>
+        <td>${getMonthLabel(duration, startDate)} (Principal Return)</td>
+        <td>Rs. ${investment.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
         <td class="checkbox-cell">
-          <input type="checkbox" ${stored[months] ? "checked" : ""} onchange="toggleMonth(${months})" />
+          <input type="checkbox" ${stored[duration] ? "checked" : ""} onchange="toggleMonth(${duration})" />
         </td>`;
       table.appendChild(finalRow);
+
+      const completed = stored.filter(Boolean).length;
+      const total = stored.length;
+      const progress = Math.round((completed / total) * 100);
+      document.getElementById("progressSummary").innerText = `✅ ${completed} of ${total} payments received (${progress}%)`;
     }
 
     function toggleMonth(index) {
-      const progress = JSON.parse(localStorage.getItem(PLAN_KEY)) || Array(months + 1).fill(false);
+      const config = JSON.parse(localStorage.getItem(CONFIG_KEY));
+      if (!config) return;
+      const progress = JSON.parse(localStorage.getItem(PLAN_KEY)) || Array(config.duration + 1).fill(false);
       progress[index] = !progress[index];
       localStorage.setItem(PLAN_KEY, JSON.stringify(progress));
       renderLoanPlan();
@@ -115,12 +241,15 @@
       document.body.classList.toggle('dark');
       const isDark = document.body.classList.contains('dark');
       localStorage.setItem("theme", isDark ? "dark" : "light");
-      document.getElementById('themeIcon').innerText = isDark ? '🌞' : '🌙';
+      document.getElementById('themeToggleBtn').innerText = isDark ? '🌞' : '🌙';
     }
 
     function applyTheme() {
       const theme = localStorage.getItem("theme");
-      if (theme === "dark") document.body.classList.add('dark');
+      if (theme === "dark") {
+        document.body.classList.add('dark');
+        document.getElementById('themeToggleBtn').innerText = '🌞';
+      }
     }
   </script>
 </body>

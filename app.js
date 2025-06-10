@@ -19,20 +19,58 @@ function logout() {
     location.href = 'login.html';
 }
 
+// function loadDashboard() {
+//     let incomes = JSON.parse(localStorage.getItem('incomes')) || [];
+//     let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+//     let totalIncome = incomes.reduce((sum, i) => sum + i.amount, 0);
+//     let totalExpense = expenses.reduce((sum, e) => sum + e.amount, 0);
+//     let net = totalIncome - totalExpense;
+//     let burnRate = totalExpense / (new Date().getMonth() + 1);
+
+//     document.getElementById('cashBank').innerText = 'Rs. ' + net.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+//     document.getElementById('burnRate').innerText = 'Rs. ' + burnRate.toLocaleString(undefined, { minimumFractionDigits: 2 });
+//     document.getElementById('expenses').innerText = 'Rs. ' + totalExpense.toLocaleString(undefined, { minimumFractionDigits: 2 }); 
+//     document.getElementById('solvency').innerText = (net / (totalExpense/ (new Date().getMonth() + 1))).toFixed(1) + ' months';
+//     drawChart(incomes, expenses);
+// }
+
 function loadDashboard() {
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+
     let incomes = JSON.parse(localStorage.getItem('incomes')) || [];
     let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
-    let totalIncome = incomes.reduce((sum, i) => sum + i.amount, 0);
-    let totalExpense = expenses.reduce((sum, e) => sum + e.amount, 0);
+
+    // Filter incomes for current month
+    let monthIncomes = incomes.filter(i => {
+        let date = new Date(i.date);
+        return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+    });
+
+    // Filter expenses for current month
+    let monthExpenses = expenses.filter(e => {
+        let date = new Date(e.date);
+        return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+    });
+
+    // Calculate totals for this month
+    let totalIncome = monthIncomes.reduce((sum, i) => sum + i.amount, 0);
+    let totalExpense = monthExpenses.reduce((sum, e) => sum + e.amount, 0);
     let net = totalIncome - totalExpense;
-    let burnRate = totalExpense / (new Date().getMonth() + 1);
+    let burnRate = totalExpense; // for this month only
 
     document.getElementById('cashBank').innerText = 'Rs. ' + net.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     document.getElementById('burnRate').innerText = 'Rs. ' + burnRate.toLocaleString(undefined, { minimumFractionDigits: 2 });
-    document.getElementById('expenses').innerText = 'Rs. ' + totalExpense.toLocaleString(undefined, { minimumFractionDigits: 2 }); 
-    document.getElementById('solvency').innerText = (net / (totalExpense/ (new Date().getMonth() + 1))).toFixed(1) + ' months';
+    document.getElementById('expenses').innerText = 'Rs. ' + totalExpense.toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+    // If burnRate is 0, avoid division by zero
+    let solvency = burnRate > 0 ? (net / burnRate).toFixed(1) + ' months' : '∞';
+    document.getElementById('solvency').innerText = solvency;
+
+    // Draw full chart (you can keep original incomes/expenses here)
     drawChart(incomes, expenses);
 }
+
 
 function addIncome() {
     let amount = parseFloat(document.getElementById('incomeAmount').value);
